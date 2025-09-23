@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { PageTransition } from '@/components/page-transition';
 import { Navbar } from '@/components/navbar';
+import { NavigationProvider } from '@/components/navigation-controller';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,11 +23,13 @@ export default function RootLayout({
         {/* Background gradient */}
         <div className="fixed inset-0 bg-gradient-to-br from-gray-950 via-purple-950/20 to-blue-950/20 -z-10" />
         
-        {/* Fixed Navbar - doesn't take space from content flow */}
-        <Navbar />
-        
-        {/* Page content with transitions */}
-        <PageTransition>{children}</PageTransition>
+        <NavigationProvider>
+          {/* Fixed Navbar - doesn't take space from content flow */}
+          <Navbar />
+          
+          {/* Page content with transitions */}
+          <PageTransition>{children}</PageTransition>
+        </NavigationProvider>
       </body>
     </html>
   );
