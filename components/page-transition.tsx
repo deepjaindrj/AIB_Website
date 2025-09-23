@@ -11,20 +11,31 @@ interface PageTransitionProps {
 export function PageTransition({ children }: PageTransitionProps) {
   const pathname = usePathname();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const [displayedChildren, setDisplayedChildren] = useState(children);
+  const [displayedChildren, setDisplayedChildren] = useState<ReactNode>(null);
   const [isExiting, setIsExiting] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const previousPathnameRef = useRef(pathname);
 
+  // Handle client-side mounting to prevent hydration issues
   useEffect(() => {
+    setIsMounted(true);
+    setDisplayedChildren(children);
+  }, [children]);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
     // After initial render, set isInitialLoad to false
     const timer = setTimeout(() => {
       setIsInitialLoad(false);
     }, 100);
     
     return () => clearTimeout(timer);
-  }, []);
+  }, [isMounted]);
 
   useEffect(() => {
+    if (!isMounted) return;
+
     // If pathname changed and it's not the initial load
     if (!isInitialLoad && pathname !== previousPathnameRef.current) {
       setIsExiting(true);
@@ -35,7 +46,7 @@ export function PageTransition({ children }: PageTransitionProps) {
       setDisplayedChildren(children);
     }
     previousPathnameRef.current = pathname;
-  }, [pathname, children, isInitialLoad, isExiting]);
+  }, [pathname, children, isInitialLoad, isExiting, isMounted]);
 
   const handleExitComplete = () => {
     // After exit animation completes, update the content and allow enter animation
@@ -43,8 +54,8 @@ export function PageTransition({ children }: PageTransitionProps) {
     setDisplayedChildren(children);
   };
 
-  // For initial load, render without animation
-  if (isInitialLoad) {
+  // Prevent hydration mismatch - render nothing on server
+  if (!isMounted) {
     return (
       <div className="fixed inset-0">
         <div className="h-full overflow-auto">
@@ -54,17 +65,32 @@ export function PageTransition({ children }: PageTransitionProps) {
     );
   }
 
+  // For initial load, render without animation
+  if (isInitialLoad) {
+    return (
+      <div className="fixed inset-0">
+        <div className="h-full overflow-auto">
+          {displayedChildren}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <AnimatePresence mode="wait" initial={false} onExitComplete={handleExitComplete}>
       <motion.div
         key={pathname}
-        className="fixed inset-0"
+        className="fixed inset-0 transition-all duration-1000 ease-out"
+        style={{
+          background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(55, 48, 163, 0.1) 50%, rgba(59, 130, 246, 0.1) 100%)',
+          backdropFilter: 'blur(20px)',
+        }}
         initial={{ 
           scale: 0.7,
           borderRadius: '24px',
           y: '100vh',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
-          filter: 'blur(8px)',
+          opacity: 0.3,
         }}
         animate={{ 
           scale: [0.7, 0.7, 1],
@@ -75,7 +101,7 @@ export function PageTransition({ children }: PageTransitionProps) {
             '0 25px 50px -12px rgba(0, 0, 0, 0.3)',
             '0 0 0 0 rgba(0, 0, 0, 0)'
           ],
-          filter: ['blur(8px)', 'blur(4px)', 'blur(0px)'],
+          opacity: [0.3, 0.7, 1],
         }}
         exit={{ 
           scale: [1, 0.8, 0.8],
@@ -86,7 +112,7 @@ export function PageTransition({ children }: PageTransitionProps) {
             '0 15px 35px -8px rgba(0, 0, 0, 0.3)',
             '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
           ],
-          filter: ['blur(0px)', 'blur(2px)', 'blur(8px)'],
+          opacity: [1, 0.7, 0.3],
         }}
         transition={{
           duration: 2.2,
@@ -107,14 +133,10 @@ export function PageTransition({ children }: PageTransitionProps) {
             ease: [0.25, 0.46, 0.45, 0.94],
             times: [0, 0.4, 1]
           },
-          filter: { 
+          opacity: { 
             duration: 2.2,
             ease: [0.25, 0.46, 0.45, 0.94]
           },
-        }}
-        style={{
-          background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(55, 48, 163, 0.1) 50%, rgba(59, 130, 246, 0.1) 100%)',
-          backdropFilter: 'blur(20px)',
         }}
       >
         <div className="h-full overflow-auto">
