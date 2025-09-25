@@ -1,5 +1,5 @@
 // components/ErrorBoundary.tsx
-'use client';
+// Remove this line: 'use client';
 
 import { Component, ErrorInfo, ReactNode } from 'react';
 
