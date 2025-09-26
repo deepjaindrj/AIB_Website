@@ -1,180 +1,107 @@
 'use client';
 import React from 'react';
 
-const techTags: string[] = [
+const techTags = [
+  'AI',
   'ROBOTICS',
   'SPACE ROBOTICS',
   'DEFENSE TECH',
   'MANUFACTURING',
   'FINTECH',
-  'VCS',
-  'AI',
-  'AEROSPACE',
-  'BIOTECH',
-  'QUANTUM',
-  'CYBERSECURITY',
-  'CLEANTECH',
-  'HARDWARE',
+  'VCS'
 ];
 
 const TagItem: React.FC<{ tag: string }> = ({ tag }) => (
-  <div
-    className="tag-item relative px-8 h-16 mb-5 bg-zinc-900/10 backdrop-blur-[1px] border border-zinc-700/35 hover:border-orange-300 text-zinc-200 flex items-center select-none transition-all duration-200"
-    style={{
-      borderRadius: 18,
-      clipPath:
-        'polygon(6% 0%, 94% 0%, 100% 12%, 100% 88%, 94% 100%, 6% 100%, 0% 88%, 0% 12%)',
-      boxShadow:
-        'inset 0 1px 0 rgba(255,255,255,0.03), 0 0 0 1px rgba(255,255,255,0.02)',
-    }}
-  >
-    <span className="text-[15px] tracking-[0.04em] font-medium">{tag}</span>
-    <span
-      className="pointer-events-none absolute inset-0 rounded-[18px]"
-      style={{
-        boxShadow:
-          'inset 0 0 0 1px rgba(255,255,255,0.02), inset 0 -8px 24px rgba(0,0,0,0.25)',
-      }}
-    />
+  <div className="relative mb-6 w-full h-20 group">
+    <svg 
+      width="100%" 
+      height="100%" 
+      viewBox="0 0 510 109" 
+      fill="none" 
+      className="absolute inset-0 text-zinc-700 group-hover:text-orange-400 transition-colors duration-300"
+    >
+      <g clipPath="url(#clip0_6806_915)">
+        <path 
+          d="M0.400393 19.8237L18.4814 0.399903L491.063 0.399914L509.6 19.8257L509.6 89.1734L491.063 108.599L18.4814 108.599L0.400391 89.1753L0.400393 19.8237Z" 
+          stroke="currentColor" 
+          strokeWidth="0.8"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_6806_915">
+          <rect width="510" height="109" fill="white"/>
+        </clipPath>
+      </defs>
+    </svg>
+    <div className="absolute inset-0 flex items-center justify-center">
+      <span className="text-zinc-200 text-base font-medium tracking-wide" style={{ fontFamily: 'EVO, Inter, sans-serif' }}>
+        {tag}
+      </span>
+    </div>
   </div>
 );
 
-const TechSection: React.FC = () => {
+const TechSection = () => {
   return (
-    <section className="w-screen h-screen bg-zinc-950 flex items-center justify-center p-4">
-      <div
-        className="tech-board group relative w-full h-full max-w-[1200px] mx-auto rounded-[28px] p-4 md:p-10 lg:p-10"
-        style={{
-          outline: '3px solid rgba(113,113,122,0.26)',
-          outlineOffset: -22,
-          borderRadius: 28,
-        }}
-      >
-        <div
-          className="pointer-events-none absolute inset-0 rounded-[28px] transition-colors duration-200"
-          style={{ outline: '3px solid transparent', outlineOffset: -22 }}
-        />
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 h-full items-center gap-8 lg:gap-10 mx-auto">
-          <div className="flex flex-col justify-center items-center text-center h-full lg:-translate-x-4">
-            <div className="space-y-6">
-              <h1
-                className="text-zinc-100 font-light tracking-tight"
-                style={{
-                  fontFamily:
-                    'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial',
-                  fontSize: 'clamp(3rem, 6.5vw, 7rem)',
-                  lineHeight: 1.02,
-                  letterSpacing: '-0.03em',
-                }}
-              >
+    <section className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div className="w-full max-w-8xl mx-auto px-16 h-[80vh] border border-zinc-800">
+        <div className="grid grid-cols-2 gap-8 h-full">
+          {/* Left side - Text content */}
+          <div className="flex flex-col justify-center items-start">
+            <div className="space-y-8">
+              <h1 className="text-6xl lg:text-7xl xl:text-8xl font-light text-zinc-100 tracking-tight leading-none" style={{ fontFamily: 'EVO, Inter, sans-serif' }}>
                 Hard tech
               </h1>
-
-              <p
-                className="text-zinc-400 max-w-xl mx-auto"
-                style={{
-                  fontFamily:
-                    'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial',
-                  fontSize: 'clamp(16px, 1.7vw, 19px)',
-                  lineHeight: 1.6,
-                  letterSpacing: '-0.005em',
-                }}
-              >
-                From robotics and AI to automation, aerospace, and advanced
-                systems. Our work translates deep tech into clear, usable, and
-                market‑ready interfaces.
-              </p>
+              
+              <div className="max-w-lg">
+                <p className="text-lg lg:text-xl text-zinc-400 leading-relaxed" style={{ fontFamily: 'evo2, Inter, sans-serif' }}>
+                  From robotics and AI to automation, aerospace, and advanced systems. Our work translates deep tech into clear, usable, and market-ready interfaces.
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="flex justify-center lg:justify-end h-full items-center lg:translate-x-4">
-            <div className="w-[380px] max-w-[42vw] h-full max-h-[calc(100vh-8rem)] relative overflow-hidden">
-              <div className="vertical-marquee h-full">
-                <div className="vertical-marquee-content">
-                  <div className="flex flex-col">
-                    {techTags.map((tag, i) => (
-                      <TagItem key={`first-${i}`} tag={tag} />
-                    ))}
-                  </div>
-                  <div className="flex flex-col">
-                    {techTags.map((tag, i) => (
-                      <TagItem key={`second-${i}`} tag={tag} />
-                    ))}
-                  </div>
+          {/* Right side - Scrolling tags */}
+          <div className="flex justify-end items-center">
+            <div className="relative w-[600px] h-[80vh] overflow-hidden">
+              <div className="absolute inset-0 animate-scroll-down">
+                <div className="flex flex-col">
+                  {techTags.map((tag, i) => (
+                    <TagItem key={`first-${i}`} tag={tag} />
+                  ))}
+                </div>
+                <div className="flex flex-col">
+                  {techTags.map((tag, i) => (
+                    <TagItem key={`second-${i}`} tag={tag} />
+                  ))}
+                </div>
+                <div className="flex flex-col">
+                  {techTags.map((tag, i) => (
+                    <TagItem key={`third-${i}`} tag={tag} />
+                  ))}
                 </div>
               </div>
-
-              <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-zinc-950 to-transparent pointer-events-none z-10" />
-              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-zinc-950 to-transparent pointer-events-none z-10" />
             </div>
           </div>
         </div>
-
-        <div
-          className="pointer-events-none absolute inset-3 rounded-[22px]"
-          style={{ boxShadow: 'inset 0 0 0 3px rgba(255,255,255,0.05)' }}
-        />
       </div>
 
       <style jsx>{`
-        .tech-board:hover {
-          outline-color: rgba(255, 149, 0, 0.98);
-        }
-        .tech-board:hover > div:first-of-type {
-          outline-color: rgba(255, 149, 0, 0.98);
-        }
-
-        .vertical-marquee {
-          position: relative;
-          overflow: hidden;
-          mask-image: linear-gradient(
-            to bottom,
-            transparent,
-            white 10%,
-            white 90%,
-            transparent
-          );
-          -webkit-mask-image: linear-gradient(
-            to bottom,
-            transparent,
-            white 10%,
-            white 90%,
-            transparent
-          );
-        }
-        .vertical-marquee-content {
-          display: flex;
-          flex-direction: column;
-          animation: scroll-up 22s linear infinite;
-        }
-        .vertical-marquee:hover .vertical-marquee-content {
-          animation-play-state: paused;
-        }
-
-        .tag-item:hover {
-          border-color: rgba(255, 149, 0, 0.95);
-          box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.04),
-            0 0 0 1px rgba(255, 149, 0, 0.18),
-            0 8px 24px rgba(0, 0, 0, 0.35);
-          transform: translateZ(0) scale(1.03);
-          background: rgba(24, 24, 27, 0.35);
-        }
-
-        @keyframes scroll-up {
+        @keyframes scroll-down {
           0% {
-            transform: translateY(0%);
+            transform: translateY(-66.666%);
           }
           100% {
-            transform: translateY(-50%);
+            transform: translateY(0%);
           }
         }
-
-        @media (max-width: 1024px) {
-          .tag-item {
-            height: 60px;
-          }
+        
+        .animate-scroll-down {
+          animation: scroll-down 30s linear infinite;
+        }
+        
+        .max-w-8xl {
+          max-width: 88rem;
         }
       `}</style>
     </section>

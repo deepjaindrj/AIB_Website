@@ -1,141 +1,210 @@
-import React from 'react';
+'use client';
+
+import React, { useRef, useEffect, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
+
+// Counter animation component
+const AnimatedCounter: React.FC<{ value: string; inView: boolean; duration?: number }> = ({ value, inView, duration = 7 }) => {
+  const [displayValue, setDisplayValue] = useState('0');
+  
+  useEffect(() => {
+    if (!inView) return;
+    
+    // Extract number from value (e.g., "120M+" -> 120)
+    const match = value.match(/^(\d+(?:\.\d+)?)/);
+    if (!match) {
+      setDisplayValue(value);
+      return;
+    }
+    
+    const targetNum = parseFloat(match[1]);
+    let currentNum = 0;
+    
+    const animationDuration = duration * 100; // Convert to milliseconds
+    const startTime = Date.now();
+    
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / animationDuration, 1);
+      
+      // Ease out animation
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      currentNum = targetNum * easeProgress;
+      
+      setDisplayValue(Math.floor(currentNum).toString());
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setDisplayValue(targetNum.toString()); // Ensure final value is exact
+      }
+    };
+    
+    // Start animation after a small delay
+    const timer = setTimeout(() => {
+      animate();
+    }, 200);
+    
+    return () => clearTimeout(timer);
+  }, [value, inView, duration]);
+  
+  return <>{displayValue}</>;
+};
 
 interface StatCardProps {
   title: string;
   value: string;
+  suffix: string;
   description: string;
-  hasOrangeAccent?: boolean;
+  hasOrangeDot?: boolean;
+  index: number;
+  countDuration?: number;
 }
 
 const StatCard: React.FC<StatCardProps> = ({ 
   title, 
   value, 
+  suffix,
   description, 
-  hasOrangeAccent 
+  hasOrangeDot,
+  index,
+  countDuration = 100
 }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-10%" });
+  
   return (
-    <div className="relative group">
-      {/* Card Container - expanded width and height */}
-      <div className="bg-zinc-900/60 border border-zinc-800/40 p-12 h-[450px] w-full flex flex-col justify-between backdrop-blur-sm transition-all duration-300 hover:bg-zinc-900/70 hover:border-zinc-700/50">
-        
-        {/* Orange accent dot */}
-        {hasOrangeAccent && (
-          <div className="absolute top-10 right-10 w-3 h-3 bg-orange-500 rounded-full"></div>
+    <motion.div 
+      ref={ref}
+      className="relative h-[35vh] w-auto flex flex-col justify-between"
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ 
+        duration: 0.6, 
+        delay: index * 0.1,
+        ease: "easeOut"
+      }}
+    >
+      {/* Top section - Title */}
+      <div>
+        {/* Orange dot for the last card */}
+        {hasOrangeDot && (
+          <div className="absolute top-0 right-0 w-3 h-3 bg-orange-500 rounded-full"></div>
         )}
         
-        {/* Title Section - exact font matching */}
-        <div className="flex-shrink-0">
-          {title?.trim() && (
-            <div 
-              className="text-zinc-500 uppercase leading-none mb-20"
-              style={{ 
-                fontSize: '11px',
-                fontFamily: 'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                fontWeight: 500,
-                letterSpacing: '0.15em'
-              }}
-            >
-              {title}
-            </div>
-          )}
-        </div>
-        
-        {/* Value Section - exact font matching from reference */}
-        <div className="flex-1 flex items-end">
-          <div 
-            className="text-white leading-[0.85]"
-            style={{ 
-              fontSize: '5.5rem', 
-              fontFamily: 'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-              fontWeight: 300,
-              letterSpacing: '-0.02em'
-            }}
-          >
-            {value}
-          </div>
-        </div>
-        
-        {/* Description Section - exact font matching */}
-        <div className="flex-1 flex items-end">
-          <p 
-            className="text-zinc-400 leading-[1.45] max-w-none"
-            style={{ 
-              fontSize: '16px',
-              fontFamily: 'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-              fontWeight: 400,
-              letterSpacing: '-0.01em'
-            }}
-          >
-            {description}
-          </p>
+        {/* Title (eyebrow) */}
+        <div className="text-zinc-500 uppercase text-sm tracking-wider">
+          {title}
         </div>
       </div>
-    </div>
+      
+      {/* Bottom section - Stats and Description */}
+      <div>
+        {/* Large number with suffix */}
+        <div className="text-white mb-3 text-6xl font-light leading-none tracking-tight">
+          <AnimatedCounter value={value} inView={isInView} duration={countDuration} />
+          {suffix}
+        </div>
+        
+        {/* Description */}
+        <div 
+          className="text-zinc-400 text-sm leading-relaxed max-w-none"
+        >
+          {description}
+        </div>
+      </div>
+    </motion.div>
   );
 };
 
 const HeroStatsSection: React.FC = () => {
+  const heroRef = useRef(null);
+  const isHeroInView = useInView(heroRef, { once: true, margin: "-20%" });
+  
   const stats = [
     {
       title: "INVESTMENTS",
-      value: "120M+",
-      description: "In VC funding raised by products we've helped bring to life."
+      value: "120",
+      suffix: "M+",
+      description: "In VC funding raised by products we've helped bring to life.",
+      countDuration: 7
     },
     {
       title: "RECOGNITION", 
-      value: "40+",
-      description: "Design awards from Webby, Awwwards, Adobe, Behance"
+      value: "40",
+      suffix: "+",
+      description: "Design awards from Webby, Awwwards, Adobe, Behance",
+      countDuration: 7
     },
     {
       title: "TRUST",
-      value: "90%", 
-      description: "of clients come back to us for a second project"
+      value: "90",
+      suffix: "%", 
+      description: "of clients come back to us for a second project",
+      countDuration: 7
     },
     {
-      title: "nbibi",
+      title: "",
       value: "7",
+      suffix: "",
       description: "Early stage startups that successfully scaled",
-      hasOrangeAccent: true
+      hasOrangeDot: true,
+      countDuration: 5
     }
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex flex-col px-4">
-      {/* Hero Text - exact font matching from reference */}
-      <div className="max-w-6xl mx-auto text-center pt-16 mb-auto">
-        <h1 
-          className="text-zinc-100"
-          style={{ 
-            fontSize: '2.25rem',
-            fontFamily: 'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-            fontWeight: 400,
-            lineHeight: 1.4,
-            letterSpacing: '-0.015em'
-          }}
-        >
-          Hello Robo is a digital product design agency that 
-          turns complex technology into intuitive, usable 
-          interfaces. We work with forward-thinking teams 
-          to create market-ready digital products that are 
-          easy to use and hard to ignore.
-        </h1>
-      </div>
-
-      {/* Stats Grid - positioned at very bottom */}
-      <div className="w-full max-w-[1600px] mx-auto px-4 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {stats.map((stat, index) => (
-            <StatCard
-              key={index}
-              title={stat.title}
-              value={stat.value}
-              description={stat.description}
-              hasOrangeAccent={stat.hasOrangeAccent}
-            />
-          ))}
+    <section className="min-h-screen bg-zinc-950">
+      <div className="py-16">
+        <div className=" mx-auto px-6">
+          
+          {/* Hero Text Section */}
+          <div ref={heroRef} className="max-w-4xl mx-auto mb-24">
+            <div className="text-center mx-auto max-w-4xl text-zinc-100 text-3xl leading-[1.4]">
+              {[
+                "HHello Robo is a digital product design agency that",
+"turns complex technology into intuitive, usable",
+"interfaces. We work with forward-thinking teams",
+"to create market-ready digital products that are",
+"easy to use and hard to ignore."
+              ].map((line, index) => (
+                <div key={index} className="overflow-hidden">
+                  <motion.div
+                    initial={{ y: "100%" }}
+                    animate={isHeroInView ? { y: "0%" } : { y: "100%" }}
+                    transition={{ 
+                      duration: 0.6, 
+                      ease: "easeOut",
+                      delay: 0.2 + (index * 0.1)
+                    }}
+                  >
+                    {line}
+                  </motion.div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Cards Wrapper */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-16">
+            {stats.map((stat, index) => (
+              <div key={index} className="bg-zinc-900/60 border border-zinc-800/40 p-8 backdrop-blur-sm transition-all duration-300 hover:bg-zinc-900/70 hover:border-zinc-700/50 min-h-80">
+                <StatCard
+                  title={stat.title}
+                  value={stat.value}
+                  suffix={stat.suffix}
+                  description={stat.description}
+                  hasOrangeDot={stat.hasOrangeDot}
+                  index={index}
+                  countDuration={stat.countDuration}
+                />
+              </div>
+            ))}
+          </div>
+          
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

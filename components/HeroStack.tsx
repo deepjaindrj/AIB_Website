@@ -41,36 +41,48 @@ function orbitSafe(
 }
 
 /* ========== SECTION 1: Radar Hero ========== */
+/* ========== SECTION 1: Radar Hero ========== */
 const RadarSection: React.FC = () => {
-  const outerRef = useRef<SVGGElement | null>(null);
-  const ringRef = useRef<SVGGElement | null>(null);
+  const circleClockwiseRef = useRef<SVGGElement | null>(null);
+  const circleCounterRef = useRef<SVGGElement | null>(null);
   const tickRef = useRef<SVGGElement | null>(null);
-  const blip1Ref = useRef<SVGCircleElement | null>(null);
-  const blip2Ref = useRef<SVGPolygonElement | null>(null);
-  const blip3Ref = useRef<SVGCircleElement | null>(null);
-
-  const orbit1PathRef = useRef<SVGPathElement | null>(null);
-  const orbit2PathRef = useRef<SVGPathElement | null>(null);
-  const orbit3PathRef = useRef<SVGPathElement | null>(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const origin = '50% 50%';
 
-      if (outerRef.current) {
-        gsap.to(outerRef.current, { rotation: 360, repeat: -1, ease: 'none', duration: 48, transformOrigin: origin });
-      }
-      if (ringRef.current) {
-        gsap.to(ringRef.current, { rotation: 360, repeat: -1, ease: 'none', duration: 36, transformOrigin: origin });
-      }
+      // Rotating tick marks around the perimeter
       if (tickRef.current) {
-        gsap.to(tickRef.current, { rotation: 360, repeat: -1, ease: 'none', duration: 120, transformOrigin: origin });
+        gsap.to(tickRef.current, { 
+          rotation: 360, 
+          repeat: -1, 
+          ease: 'none', 
+          duration: 120, 
+          transformOrigin: origin 
+        });
       }
 
-      // Safe orbits
-      orbitSafe(blip1Ref.current, orbit1PathRef.current, 18, false, 0);
-      orbitSafe(blip2Ref.current, orbit2PathRef.current, 26, true, 0);
-      orbitSafe(blip3Ref.current, orbit3PathRef.current, 34, false, 0);
+      // Clockwise rotating circle with mask
+      if (circleClockwiseRef.current) {
+        gsap.to(circleClockwiseRef.current, { 
+          rotation: 360, 
+          repeat: -1, 
+          ease: 'none', 
+          duration: 90, 
+          transformOrigin: origin 
+        });
+      }
+
+      // Counter-clockwise rotating elements
+      if (circleCounterRef.current) {
+        gsap.to(circleCounterRef.current, { 
+          rotation: -360, 
+          repeat: -1, 
+          ease: 'none', 
+          duration: 60, 
+          transformOrigin: origin 
+        });
+      }
     });
     return () => ctx.revert();
   }, []);
@@ -98,7 +110,7 @@ const RadarSection: React.FC = () => {
               className="mt-8 text-zinc-400"
               style={{
                 fontFamily:
-                  'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                  'Evo, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
                 fontSize: 'clamp(0.95rem, 1.2vw, 1.375rem)',
                 lineHeight: 1.7,
                 letterSpacing: '-0.005em',
@@ -113,29 +125,104 @@ const RadarSection: React.FC = () => {
 
         <div className="lg:col-span-6 relative flex items-center justify-center">
           <div className="w-[92%] max-w-[820px] aspect-square">
-            <svg viewBox="0 0 1000 1000" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 617 614" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <radialGradient id="ringFade" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#ffffff" stopOpacity="0.04" />
-                  <stop offset="100%" stopColor="#ffffff" stopOpacity="0.02" />
-                </radialGradient>
+                <mask id="mask0_radar" style={{maskType: 'alpha'}} maskUnits="userSpaceOnUse" x="5" y="4" width="606" height="605">
+                  {/* Radial lines creating the radar sweep mask */}
+                  {Array.from({ length: 120 }).map((_, i) => {
+                    const angle = (i / 120) * 360;
+                    const startAngle = (angle - 2) * (Math.PI / 180);
+                    const endAngle = (angle + 2) * (Math.PI / 180);
+                    const innerR = 60;
+                    const outerR = 300;
+                    
+                    const x1 = 308 + Math.cos(startAngle) * innerR;
+                    const y1 = 307 + Math.sin(startAngle) * innerR;
+                    const x2 = 308 + Math.cos(startAngle) * outerR;
+                    const y2 = 307 + Math.sin(startAngle) * outerR;
+                    const x3 = 308 + Math.cos(endAngle) * outerR;
+                    const y3 = 307 + Math.sin(endAngle) * outerR;
+                    const x4 = 308 + Math.cos(endAngle) * innerR;
+                    const y4 = 307 + Math.sin(endAngle) * innerR;
+                    
+                    return (
+                      <path
+                        key={i}
+                        d={`M ${x1} ${y1} L ${x2} ${y2} L ${x3} ${y3} L ${x4} ${y4} Z`}
+                        stroke="#373737"
+                        strokeWidth="0.8"
+                        strokeMiterlimit="10"
+                      />
+                    );
+                  })}
+                </mask>
               </defs>
 
-              {/* Crosshair */}
-              <g stroke="#E4E4E7" strokeOpacity="0.18">
-                <line x1="500" y1="100" x2="500" y2="900" />
-                <line x1="100" y1="500" x2="900" y2="500" />
+              {/* Masked rotating circle */}
+              <g mask="url(#mask0_radar)" ref={circleClockwiseRef}>
+                <circle cx="308" cy="307" r="276" fill="white" />
               </g>
 
-              {/* Tick marks */}
-              <g ref={tickRef} transform="translate(500 500)">
+              {/* Outer circle border */}
+              <circle cx="308" cy="306" r="281" stroke="#4B4B54" strokeWidth="0.8" fill="none" />
+
+              {/* Dashed arc */}
+              <path 
+                d="M 496 305 C 496 409.381 411.382 494 307 494" 
+                stroke="white" 
+                strokeWidth="0.8" 
+                strokeDasharray="3 3" 
+                fill="none" 
+              />
+
+              {/* Crosshair lines */}
+              <line x1="307" y1="557" x2="307" y2="57" stroke="white" strokeWidth="0.8" />
+              <line x1="557" y1="306" x2="57" y2="306" stroke="white" strokeWidth="0.8" />
+
+              {/* Central dark circle with text */}
+              <circle cx="308" cy="306" r="113" fill="#151518" stroke="white" strokeWidth="0.8" />
+
+              {/* Center text */}
+              <text
+                x="308"
+                y="296"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fill="white"
+                style={{
+                  fontFamily: 'Inter, system-ui, sans-serif',
+                  fontSize: '11px',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase' as any,
+                }}
+              >
+                PRODUCT
+              </text>
+              <text
+                x="308"
+                y="318"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fill="white"
+                style={{
+                  fontFamily: 'Inter, system-ui, sans-serif',
+                  fontSize: '11px',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase' as any,
+                }}
+              >
+                MARKET FIT
+              </text>
+
+              {/* Rotating tick marks around perimeter */}
+              <g ref={tickRef} transform="translate(308 307)">
                 {Array.from({ length: 180 }).map((_, i) => {
                   const a = (i / 180) * Math.PI * 2;
-                  const r = 430;
+                  const r = 270;
                   const x1 = Math.cos(a) * r;
                   const y1 = Math.sin(a) * r;
-                  const x2 = Math.cos(a) * (r - 10);
-                  const y2 = Math.sin(a) * (r - 10);
+                  const x2 = Math.cos(a) * (r - 8);
+                  const y2 = Math.sin(a) * (r - 8);
                   return (
                     <line
                       key={i}
@@ -143,68 +230,65 @@ const RadarSection: React.FC = () => {
                       y1={y1}
                       x2={x2}
                       y2={y2}
-                      stroke="#E4E4E7"
-                      strokeOpacity="0.18"
-                      strokeWidth={1}
+                      stroke="#4B4B54"
+                      strokeOpacity="0.6"
+                      strokeWidth={0.8}
                       strokeLinecap="round"
                     />
                   );
                 })}
               </g>
 
-              {/* Outer ring */}
-              <g ref={outerRef}>
-                <circle cx="500" cy="500" r="440" fill="none" stroke="#E4E4E7" strokeOpacity="0.22" strokeWidth="1.5" />
-                <circle
-                  cx="500"
-                  cy="500"
-                  r="400"
-                  fill="none"
-                  stroke="#E4E4E7"
-                  strokeOpacity="0.12"
-                  strokeWidth="2"
-                  strokeDasharray="3 10"
+              {/* Counter-rotating elements */}
+              <g ref={circleCounterRef}>
+                {/* Inner circle */}
+                <circle cx="308" cy="306" r="189" stroke="#4B4B54" strokeWidth="0.8" fill="none" />
+                
+                {/* Floating geometric elements */}
+                {/* Hexagon */}
+                <path 
+                  d="M177.787 437.34L184.468 437.34L187.809 443.127L184.468 448.913L177.787 448.913L174.446 443.127L177.787 437.34Z" 
+                  fill="white" 
+                />
+                
+                {/* Small squares */}
+                <rect x="496" y="222" width="4" height="4" fill="white" />
+                <rect x="467" y="222" width="4" height="4" fill="white" />
+                <rect x="496" y="250" width="4" height="4" fill="white" />
+                <rect x="467" y="250" width="4" height="4" fill="white" />
+                
+                {/* Angled squares */}
+                <rect 
+                  x="190" y="158" 
+                  width="3.2" height="3.2" 
+                  fill="white" 
+                  transform="rotate(-16.3 191.6 159.6)" 
+                />
+                <rect 
+                  x="165" y="151" 
+                  width="3.2" height="3.2" 
+                  fill="white" 
+                  transform="rotate(-16.3 166.6 152.6)" 
+                />
+                <rect 
+                  x="183" y="183" 
+                  width="3.2" height="3.2" 
+                  fill="white" 
+                  transform="rotate(-16.3 184.6 184.6)" 
+                />
+                <rect 
+                  x="158" y="176" 
+                  width="3.2" height="3.2" 
+                  fill="white" 
+                  transform="rotate(-16.3 159.6 177.6)" 
+                />
+                
+                {/* Central white hexagon */}
+                <path 
+                  d="M180.166 164.799L182.114 171.913L176.928 177.157L169.793 175.287L167.845 168.174L173.031 162.93L180.166 164.799Z" 
+                  fill="white" 
                 />
               </g>
-
-              {/* Inner rings */}
-              <g ref={ringRef}>
-                <circle cx="500" cy="500" r="300" fill="url(#ringFade)" stroke="#E4E4E7" strokeOpacity="0.22" strokeWidth="2" />
-                <circle cx="500" cy="500" r="200" fill="none" stroke="#E4E4E7" strokeOpacity="0.22" strokeWidth="2" />
-                <circle cx="500" cy="500" r="110" fill="none" stroke="#E4E4E7" strokeOpacity="0.22" strokeWidth="2" />
-              </g>
-
-              {/* Center label */}
-              <text
-                x="500"
-                y="500"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill="#E4E4E7"
-                opacity="0.85"
-                style={{
-                  fontFamily:
-                    'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                  fontSize: 22,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase' as any,
-                }}
-              >
-                PRODUCT
-                <tspan x="500" dy="1.4em">
-                  MARKET FIT
-                </tspan>
-              </text>
-
-              {/* Orbits (hidden) */}
-              <path ref={orbit1PathRef} d="M 845 500 a 345 345 0 1 0 -690 0 a 345 345 0 1 0 690 0" fill="none" />
-              <path ref={orbit2PathRef} d="M 755 500 a 255 255 0 1 0 -510 0 a 255 255 0 1 0 510 0" fill="none" />
-              <path ref={orbit3PathRef} d="M 655 500 a 155 155 0 1 0 -310 0 a 155 155 0 1 0 310 0" fill="none" />
-
-              {/* Blips */}
-              <circle ref={blip1Ref} r="6" fill="#FFFFFF" opacity="0.9" transform="translate(500 155)" />
-              <polygon ref={blip2Ref} points="0,-8 7,6 -7,6" fill="#FFFFFF" opacity="0.9" transform="translate(500 245)" />
-              <circle ref={blip3Ref} r="4" fill="#FFFFFF" opacity="0.9" transform="translate(500 345)" />
             </svg>
           </div>
         </div>
@@ -215,7 +299,7 @@ const RadarSection: React.FC = () => {
 
 /* ========== SECTION 2: Commercial Drivers Funnel ========== */
 const CommercialSection: React.FC = () => {
-  const circleRef = useRef<SVGGElement | null>(null);
+  const circleRef = useRef<SVGCircleElement | null>(null);
   const drawRefs = useRef<SVGPathElement[]>([]);
 
   useLayoutEffect(() => {
@@ -287,67 +371,95 @@ const CommercialSection: React.FC = () => {
 
         <div className="lg:col-span-6 relative flex items-center justify-center">
           <div className="w-[92%] max-w-[820px] aspect-square">
-            <svg viewBox="0 0 1000 1000" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-              <g ref={circleRef} transform="translate(500 500)">
-                {Array.from({ length: 180 }).map((_, i) => {
-                  const a = (i / 180) * Math.PI * 2;
-                  const r = 430;
-                  const x1 = Math.cos(a) * r;
-                  const y1 = Math.sin(a) * r;
-                  const x2 = Math.cos(a) * (r - 10);
-                  const y2 = Math.sin(a) * (r - 10);
+            <svg viewBox="0 0 617 615" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+              <mask id="mask0_5409_900" style={{maskType: 'alpha'}} maskUnits="userSpaceOnUse" x="5" y="5" width="606" height="605">
+                {Array.from({ length: 120 }).map((_, i) => {
+                  const angle = (i / 120) * Math.PI * 2;
+                  const centerX = 307.909;
+                  const centerY = 307.361;
+                  const outerRadius = 302;
+                  const innerRadius = 270;
+                  const x1 = centerX + Math.cos(angle) * outerRadius;
+                  const y1 = centerY + Math.sin(angle) * outerRadius;
+                  const x2 = centerX + Math.cos(angle) * innerRadius;
+                  const y2 = centerY + Math.sin(angle) * innerRadius;
                   return (
-                    <line
+                    <path
                       key={i}
-                      x1={x1}
-                      y1={y1}
-                      x2={x2}
-                      y2={y2}
-                      stroke="#E4E4E7"
-                      strokeOpacity="0.16"
-                      strokeWidth={1}
-                      strokeLinecap="round"
+                      d={`M${x1} ${y1}L${x2} ${y2}`}
+                      stroke="#373737"
+                      strokeWidth="0.873839"
+                      strokeMiterlimit="10"
                     />
                   );
                 })}
+              </mask>
+              
+              <g mask="url(#mask0_5409_900)">
+                <circle ref={circleRef} cx="307.909" cy="307.361" r="276.206" fill="#4B4B54" />
               </g>
-
-              <circle cx="500" cy="500" r="440" fill="none" stroke="#E4E4E7" strokeOpacity="0.18" strokeWidth="1.5" />
-
-              <rect x="225" y="225" width="550" height="550" fill="none" stroke="#E4E4E7" strokeOpacity="0.6" strokeWidth="2" />
-
-              {/* Funnel lines */}
-              <path ref={setPath} d="M500 320 V450" stroke="#E4E4E7" strokeOpacity="0.85" strokeWidth="2" fill="none" />
-              <path ref={setPath} d="M430 360 H570" stroke="#E4E4E7" strokeOpacity="0.3" strokeWidth="1.5" fill="none" />
-              <path ref={setPath} d="M500 450 L380 570" stroke="#E4E4E7" strokeOpacity="0.85" strokeWidth="2" fill="none" />
-              <path ref={setPath} d="M500 450 L620 570" stroke="#E4E4E7" strokeOpacity="0.85" strokeWidth="2" fill="none" />
-              <path ref={setPath} d="M380 570 H620" stroke="#E4E4E7" strokeOpacity="0.85" strokeWidth="2" fill="none" />
-
-              {[{ x: 500, y: 338 }, { x: 500, y: 400 }, { x: 500, y: 430 }].map((p, i) => (
-                <circle key={`u${i}`} cx={p.x} cy={p.y} r="2" fill="#E4E4E7" opacity="0.8" />
-              ))}
-              {[{ x: 500, y: 590 }, { x: 500, y: 610 }, { x: 500, y: 630 }].map((p, i) => (
-                <circle key={`d${i}`} cx={p.x} cy={p.y} r="2" fill="#E4E4E7" opacity="0.8" />
-              ))}
-
+              
+              <circle cx="307.993" cy="308.029" r="281.624" stroke="#4B4B54" strokeWidth="0.8" fill="none" />
+              <rect x="109.088" y="109.119" width="397.821" height="397.821" stroke="white" strokeWidth="0.8" fill="none" />
+              
               <text
-                x="500"
-                y="340"
+                x="310"
+                y="185"
                 textAnchor="middle"
-                fill="#E4E4E7"
-                opacity="0.9"
+                fill="white"
                 style={{
-                  fontFamily:
-                    'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                  fontSize: 24,
-                  letterSpacing: '0.08em',
+                  fontFamily: 'Inter, sans-serif',
+                  fontSize: 14,
+                  letterSpacing: '0.1em',
+                  fontWeight: 400,
                 }}
               >
                 CAPTURE
-                <tspan x="500" dy="1.35em">
-                  LEADS
-                </tspan>
               </text>
+              
+              <text
+                x="310"
+                y="205"
+                textAnchor="middle"
+                fill="white"
+                style={{
+                  fontFamily: 'Inter, sans-serif',
+                  fontSize: 14,
+                  letterSpacing: '0.1em',
+                  fontWeight: 400,
+                }}
+              >
+                LEADS
+              </text>
+
+              <line x1="307.6" y1="507" x2="307.6" y2="245" stroke="#4B4B54" strokeWidth="0.8" />
+              <line x1="376" y1="285.4" x2="236" y2="285.4" stroke="#4B4B54" strokeWidth="0.8" />
+
+              <path ref={setPath} d="M282.32 247.072L282.32 353.816L108.999 506.574" stroke="white" strokeWidth="0.8" fill="none" />
+              <polygon points="279,248.142 282.117,243 283.008,243 286.125,248.142 285.234,249 279.891,249" fill="white" />
+
+              <path ref={setPath} d="M333.68 247.072L333.68 353.816L507.001 506.574" stroke="white" strokeWidth="0.8" fill="none" />
+              <polygon points="337.125,248.142 334.008,243 333.117,243 330,248.142 330.891,249 336.234,249" fill="white" />
+
+              <g className="animate-pulse">
+                <rect width="3.53654" height="3.53654" transform="matrix(-1 0 0 1 324 269)" fill="white" />
+                <rect width="3.53654" height="3.53654" transform="matrix(-1 0 0 1 324 297.463)" fill="white" />
+              </g>
+              
+              <g className="animate-pulse" style={{animationDelay: '0.5s'}}>
+                <rect width="3.53654" height="3.53654" transform="matrix(-1 0 0 1 295.531 269)" fill="white" />
+                <rect width="3.53654" height="3.53654" transform="matrix(-1 0 0 1 295.539 297.463)" fill="white" />
+              </g>
+              
+              <g className="animate-pulse" style={{animationDelay: '1s'}}>
+                <rect width="3.53654" height="3.53654" transform="matrix(-1 0 0 1 324 451)" fill="white" />
+                <rect width="3.53654" height="3.53654" transform="matrix(-1 0 0 1 324 479.463)" fill="white" />
+              </g>
+              
+              <g className="animate-pulse" style={{animationDelay: '1.5s'}}>
+                <rect width="3.53654" height="3.53654" transform="matrix(-1 0 0 1 295.531 451)" fill="white" />
+                <rect width="3.53654" height="3.53654" transform="matrix(-1 0 0 1 295.539 479.463)" fill="white" />
+              </g>
             </svg>
           </div>
         </div>
