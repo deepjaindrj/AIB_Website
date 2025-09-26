@@ -73,6 +73,7 @@ export default function HeroSection() {
             </div>
             
             {/* Center Navigation */}
+            
             <div className="hidden md:flex items-center space-x-0 bg-black/40 backdrop-blur-sm rounded-lg px-2 py-2">
               <div className="px-6 py-2 bg-orange-500 text-white text-sm font-medium rounded">AGENCY</div>
               <div className="px-6 py-2 text-gray-400 text-sm font-medium hover:text-white transition-colors">APPROACH</div>
