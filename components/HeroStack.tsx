@@ -8,7 +8,7 @@ gsap.registerPlugin(MotionPathPlugin);
 /* Utility: safe MotionPath orbit with ref guards */
 function orbitSafe(
   el: SVGGraphicsElement | null,
-  path: SVGGraphicsElement | null,
+  path: SVGPathElement | null,
   duration: number,
   autoRotate = false,
   delay = 0
@@ -17,14 +17,14 @@ function orbitSafe(
     console.warn('orbitSafe: el or path is null', { el, path });
     return;
   }
-  if (!(el instanceof Element) || !(path instanceof Element)) {
-    console.warn('orbitSafe: el or path is not an Element', { el, path });
+  if (!(el instanceof Element) || !(path instanceof SVGPathElement)) {
+    console.warn('orbitSafe: el or path is not correct type', { el, path });
     return;
   }
 
   gsap.delayedCall(delay, () => {
     // Recheck still valid after a tick
-    if (!(el instanceof Element) || !(path instanceof Element)) return;
+    if (!(el instanceof Element) || !(path instanceof SVGPathElement)) return;
 
     gsap.to(el, {
       duration,
