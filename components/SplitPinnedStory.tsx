@@ -85,51 +85,59 @@ const SplitPinnedStory: React.FC = () => {
 
   return (
     <section ref={sectionRef} className="w-screen bg-zinc-950 text-zinc-100">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-14 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+      <div className="max-w-[1400px] mx-12 px-6 md:px-10 lg:px-14 py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-[130px]">
           {/* Left: vertical stack of 3 image cards, animated upward */}
           <div ref={leftRef} className="lg:col-span-6 overflow-hidden">
             <div ref={leftInnerRef} className="space-y-8">
               {/* Card 1 */}
-              <div className="bg-zinc-900/70 rounded-md border border-zinc-800/60 p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="text-[11px] tracking-widest text-zinc-300/80">
-                    UNDERSTANDING CUSTOMERS
-                    <br className="hidden md:block" />
-                    AND YOUR MARKET
+              <div className="bg-zinc-900/70 border border-zinc-800/60 p-6 flex flex-row items-end relative max-w-[600px]">
+                <div className="absolute top-6 right-6 w-2 h-2 bg-purple-600 rounded-sm"></div>
+                <div className="flex-1 min-w-0 flex flex-col h-full justify-between">
+                  <div>
+                    <div className="text-base font-medium tracking-widest text-zinc-300/80 mb-56">
+                      UNDERSTANDING CUSTOMERS
+                      <br className="hidden md:block" />
+                      AND YOUR MARKET
+                    </div>
                   </div>
-                  <div className="w-2 h-2 bg-orange-500 rounded-sm"></div>
+                  <ul className="mt-28 text-base font-medium text-zinc-300/90 leading-7">
+                    <li>Customer interviews</li>
+                    <li>Stakeholder interviews</li>
+                    <li>Market research</li>
+                    <li>User testing</li>
+                    <li>Competitive research</li>
+                  </ul>
                 </div>
-
-                <div className="aspect-[16/10] bg-zinc-800/70 rounded-sm overflow-hidden">
+                <div className="flex-shrink-0 w-48 h-48 bg-zinc-800/70 rounded-sm overflow-hidden">
                   <img
                     src={ph(1200, 750, 'ui')}
                     alt="placeholder 1"
                     className="w-full h-full object-cover opacity-95"
                   />
                 </div>
-
-                <ul className="mt-6 text-sm text-zinc-300/90 leading-7">
-                  <li>Customer interviews</li>
-                  <li>Stakeholder interviews</li>
-                  <li>Market research</li>
-                  <li>User testing</li>
-                  <li>Competitive research</li>
-                </ul>
               </div>
 
               {/* Card 2 */}
-              <div className="bg-zinc-900/70 rounded-md border border-zinc-800/60 p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="text-[11px] tracking-widest text-zinc-300/80">
-                    DESIGN FOR COMMERCIAL
-                    <br className="hidden md:block" />
-                    DRIVERS OF SUCCESS
+              <div className="bg-zinc-900/70  border border-zinc-800/60 p-6 flex flex-row items-end gap-4 relative max-w-[600px]">
+                <div className="absolute top-6 right-6 w-2 h-2 bg-purple-600 rounded-sm"></div>
+                <div className="flex-1 min-w-0 flex flex-col h-full justify-between">
+                  <div>
+                    <div className="text-base font-medium tracking-widest text-zinc-300/80 mb-56">
+                      DESIGN FOR COMMERCIAL
+                      <br className="hidden md:block" />
+                      DRIVERS OF SUCCESS
+                    </div>
                   </div>
-                  <div className="w-2 h-2 bg-orange-500 rounded-sm"></div>
+                  <ul className="mt-28 text-base font-medium text-zinc-300/90 leading-7">
+                    <li>UI/UX design</li>
+                    <li>Data visualization</li>
+                    <li>UI animation</li>
+                    <li>Userflows</li>
+                    <li>Design systems</li>
+                  </ul>
                 </div>
-
-                <div className="aspect-[16/10] bg-zinc-800/70 rounded-sm overflow-hidden">
+                <div className="flex-shrink-0 w-48 h-48 bg-zinc-800/70 rounded-sm overflow-hidden">
                   <img
                     src={ph(1200, 750, 'app')}
                     alt="placeholder 2"
@@ -139,15 +147,23 @@ const SplitPinnedStory: React.FC = () => {
               </div>
 
               {/* Card 3 */}
-              <div className="bg-zinc-900/70 rounded-md border border-zinc-800/60 p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="text-[11px] tracking-widest text-zinc-300/80">
-                    MARKET-READY PRODUCT DESIGN
+              <div className="bg-zinc-900/70 border border-zinc-800/60 p-6 flex flex-row items-end gap-4 relative max-w-[600px]">
+                <div className="absolute top-6 right-6 w-2 h-2 bg-purple-600 rounded-sm"></div>
+                <div className="flex-1 min-w-0 flex flex-col h-full justify-between">
+                  <div>
+                    <div className="text-base font-medium tracking-widest text-zinc-300/80 mb-56">
+                      MARKET-READY PRODUCT DESIGN
+                    </div>
                   </div>
-                  <div className="w-2 h-2 bg-orange-500 rounded-sm"></div>
+                  <ul className="mt-28 text-base font-medium text-zinc-300/90 leading-7">
+                    <li>UI/UX design</li>
+                    <li>Data visualization</li>
+                    <li>UI animation</li>
+                    <li>Userflows</li>
+                    <li>Design systems</li>
+                  </ul>
                 </div>
-
-                <div className="aspect-[16/10] bg-zinc-800/70 rounded-sm overflow-hidden">
+                <div className="flex-shrink-0 w-48 h-48 bg-zinc-800/70 rounded-sm overflow-hidden">
                   <img
                     src={ph(1200, 750, 'prototype')}
                     alt="placeholder 3"
@@ -164,9 +180,8 @@ const SplitPinnedStory: React.FC = () => {
               <p
                 className="text-zinc-200/95 font-light leading-[1.6]"
                 style={{
-                  fontFamily:
-                    'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                  fontSize: 'clamp(1.1rem, 1.4vw, 1.5rem)',
+                  fontFamily: 'DM Mono',
+                  fontSize: 'clamp(1.1rem, 1.4vw, 3rem)',
                   letterSpacing: '-0.01em',
                 }}
               >

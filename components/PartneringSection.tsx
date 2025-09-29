@@ -5,7 +5,7 @@ const PartneringSection: React.FC = () => {
   return (
     <section className="w-screen h-screen bg-zinc-950 flex items-center justify-center overflow-hidden relative">
       <div className="w-full max-w-[1900px] h-full px-6 md:px-12 lg:px-20 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 h-full items-center border border-white">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-18 h-full items-center border border-white">
           
           {/* Left Side - Scrolling Brand Logos in Rows */}
           <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
@@ -334,26 +334,25 @@ const PartneringSection: React.FC = () => {
               <h1
                 className="text-white font-light tracking-tight mb-12 leading-none"
                 style={{
-                  fontFamily: 'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                  fontSize: 'clamp(4rem, 7vw, 8.5rem)',
+                  fontFamily: 'DM Sans',
+                  fontSize: 'clamp(4rem, 7vw, 4.5rem)',
                   letterSpacing: '-0.03em',
                 }}
               >
                 Partnering with
-                <br />
                 <span className="inline-block mt-2">the best</span>
               </h1>
               
               <p
                 className="text-white/80 max-w-lg mx-auto opacity-90 leading-relaxed"
                 style={{
-                  fontFamily: 'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                  fontSize: 'clamp(1.1rem, 1.3vw, 1.4rem)',
+                  fontFamily: 'DM Mono',
+                  fontSize: 'clamp(1.1rem, 1.3vw, 1.2rem)',
                   letterSpacing: '-0.015em',
                   lineHeight: 1.65,
                 }}
               >
-                Our clients trust us to deliver exceptional results, time and time again,
+                Our clients trust us to deliver <br /> exceptional results, time and time again,<br />
                 helping over 30 brands succeed.
               </p>
             </div>

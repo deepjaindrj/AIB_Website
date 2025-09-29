@@ -18,7 +18,7 @@ const TagItem: React.FC<{ tag: string }> = ({ tag }) => (
       height="100%" 
       viewBox="0 0 510 109" 
       fill="none" 
-      className="absolute inset-0 text-zinc-700 group-hover:text-orange-400 transition-colors duration-300"
+      className="absolute inset-0 text-zinc-700 group-hover:text-purple-600 transition-colors duration-300"
     >
       <g clipPath="url(#clip0_6806_915)">
         <path 
@@ -34,7 +34,7 @@ const TagItem: React.FC<{ tag: string }> = ({ tag }) => (
       </defs>
     </svg>
     <div className="absolute inset-0 flex items-center justify-center">
-      <span className="text-zinc-200 text-base font-medium tracking-wide" style={{ fontFamily: 'EVO, Inter, sans-serif' }}>
+  <span className="text-zinc-200 text-base font-medium tracking-wide" style={{ fontFamily: 'DM Sans' }}>
         {tag}
       </span>
     </div>
@@ -49,12 +49,12 @@ const TechSection = () => {
           {/* Left side - Text content */}
           <div className="flex flex-col justify-center items-start">
             <div className="space-y-8">
-              <h1 className="text-6xl lg:text-7xl xl:text-8xl font-light text-zinc-100 tracking-tight leading-none" style={{ fontFamily: 'EVO, Inter, sans-serif' }}>
+              <h1 className="text-6xl lg:text-7xl xl:text-8xl font-light text-zinc-100 tracking-tight leading-none" style={{ fontFamily: 'DM Sans' }}>
                 Hard tech
               </h1>
               
               <div className="max-w-lg">
-                <p className="text-lg lg:text-xl text-zinc-400 leading-relaxed" style={{ fontFamily: 'evo2, Inter, sans-serif' }}>
+                <p className="text-lg lg:text-xl text-zinc-400 leading-relaxed" style={{ fontFamily: 'DM Mono' }}>
                   From robotics and AI to automation, aerospace, and advanced systems. Our work translates deep tech into clear, usable, and market-ready interfaces.
                 </p>
               </div>

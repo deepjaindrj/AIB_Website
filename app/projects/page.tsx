@@ -30,7 +30,7 @@ const projects = [
     description: "Augmented reality shopping experience with 3D product visualization.",
     image: "https://images.pexels.com/photos/3861943/pexels-photo-3861943.jpeg?auto=compress&cs=tinysrgb&w=600",
     tech: ["React Native", "Three.js", "AR Kit", "Node.js"],
-    gradient: "from-orange-500 to-red-500"
+    gradient: "from-purple-600 to-red-500"
   },
   {
     title: "Smart Home Hub",
@@ -44,7 +44,7 @@ const projects = [
     description: "Advanced blockchain explorer with transaction analysis and security features.",
     image: "https://images.pexels.com/photos/844124/pexels-photo-844124.jpeg?auto=compress&cs=tinysrgb&w=600",
     tech: ["React", "Web3", "GraphQL", "Solidity"],
-    gradient: "from-yellow-500 to-orange-500"
+    gradient: "from-yellow-500 to-purple-600"
   }
 ];
 

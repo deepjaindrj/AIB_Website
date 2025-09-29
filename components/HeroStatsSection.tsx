@@ -89,7 +89,7 @@ const StatCard: React.FC<StatCardProps> = ({
       <div>
         {/* Orange dot for the last card */}
         {hasOrangeDot && (
-          <div className="absolute top-0 right-0 w-3 h-3 bg-orange-500 rounded-full"></div>
+          <div className="absolute top-0 right-0 w-3 h-3 bg-purple-600 rounded-full"></div>
         )}
         
         {/* Title (eyebrow) */}

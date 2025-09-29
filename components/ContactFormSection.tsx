@@ -32,7 +32,7 @@ const ContactFormSection: React.FC = () => {
   };
 
   const Label = ({ children, required = false }: { children: React.ReactNode; required?: boolean }) => (
-    <label className="block text-zinc-200/90 text-sm tracking-wide mb-2">
+    <label className="block text-zinc-200/90 text-base md:text-lg tracking-wide mb-2">
       {children}
       {required ? <span className="text-zinc-200/60"> *</span> : null}
     </label>
@@ -54,7 +54,7 @@ const ContactFormSection: React.FC = () => {
       name={name}
       required={required}
       placeholder={placeholder}
-      className="w-full bg-transparent outline-none text-zinc-100 placeholder-zinc-500 border-b border-zinc-700/50 focus:border-zinc-400/70 transition-colors py-3"
+      className="w-full bg-transparent outline-none text-zinc-100 placeholder-zinc-500 border-b border-zinc-700/50 focus:border-zinc-400/70 transition-colors py-4 text-base md:text-lg"
     />
   );
 
@@ -65,7 +65,7 @@ const ContactFormSection: React.FC = () => {
         type="button"
         onClick={() => toggleTag(tag)}
         className={[
-          'px-4 md:px-5 py-3 rounded-sm text-[12px] md:text-xs font-semibold tracking-wide',
+          'px-4 md:px-6 py-6 rounded-sm text-xs md:text-sm font-semibold tracking-wide',
           'border transition-colors duration-200',
           isActive
             ? 'border-zinc-300 text-zinc-100 bg-zinc-800/60'
@@ -79,15 +79,13 @@ const ContactFormSection: React.FC = () => {
 
   return (
     <section className="w-screen min-h-screen bg-zinc-950 text-zinc-100">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-14 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <div className="max-w-[1500px] mx-10 px-6 md:px-10 lg:px-18 py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
           {/* Left headline */}
           <div className="lg:col-span-5">
             <h2
-              className="font-light leading-[1.05] tracking-tight"
+              className=" font-dm-sans leading-[1.05] tracking-tight"
               style={{
-                fontFamily:
-                  'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
                 fontSize: 'clamp(2.5rem, 6vw, 5rem)',
                 letterSpacing: '-0.02em',
               }}
@@ -100,7 +98,7 @@ const ContactFormSection: React.FC = () => {
 
           {/* Right form */}
           <div className="lg:col-span-7">
-            <form onSubmit={handleSubmit} className="space-y-10">
+            <form onSubmit={handleSubmit} className="space-y-10 text-lg font-dm-mono">
               {/* Email */}
               <div>
                 <Label required>Email</Label>
@@ -145,7 +143,7 @@ const ContactFormSection: React.FC = () => {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full py-5 md:py-6 rounded-sm bg-orange-500 hover:bg-orange-600 text-black font-semibold tracking-widest"
+                  className="w-full py-5 md:py-6 rounded-sm bg-purple-600 hover:bg-purple-600 text-black font-semibold tracking-widest"
                   style={{
                     letterSpacing: '0.12em',
                   }}

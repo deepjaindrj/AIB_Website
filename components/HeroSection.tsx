@@ -75,7 +75,7 @@ export default function HeroSection() {
             {/* Center Navigation */}
             
             <div className="hidden md:flex items-center space-x-0 bg-black/40 backdrop-blur-sm rounded-lg px-2 py-2">
-              <div className="px-6 py-2 bg-orange-500 text-white text-sm font-medium rounded">AGENCY</div>
+              <div className="px-6 py-2 bg-purple-600 text-white text-sm font-medium rounded">AGENCY</div>
               <div className="px-6 py-2 text-gray-400 text-sm font-medium hover:text-white transition-colors">APPROACH</div>
               <div className="px-6 py-2 text-gray-400 text-sm font-medium hover:text-white transition-colors">WORK</div>
               <div className="px-6 py-2 text-gray-400 text-sm font-medium hover:text-white transition-colors">THOUGHTS</div>
@@ -83,7 +83,7 @@ export default function HeroSection() {
             </div>
             
             {/* Let's Chat Button */}
-            <button className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-medium text-sm transition-all duration-300">
+            <button className="px-6 py-3 bg-purple-600 hover:bg-purple-600 text-white font-medium text-sm transition-all duration-300">
               LET'S CHAT
             </button>
           </motion.div>

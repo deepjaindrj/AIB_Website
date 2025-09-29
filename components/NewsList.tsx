@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import CurvedLoop from './CurvedLoop';
 
 type NewsItem = {
   tag: string;
@@ -26,7 +27,7 @@ const items: NewsItem[] = [
 ];
 
 const Arrow = () => (
-  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="shrink-0">
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" className="shrink-0">
     <path
       d="M5 12h12M13 6l6 6-6 6"
       stroke="currentColor"
@@ -49,10 +50,10 @@ const NewsRow: React.FC<NewsItem> = ({ tag, title, href = '#' }) => {
         'bg-transparent hover:bg-zinc-900/40',
       ].join(' ')}
     >
-      <div className="grid grid-cols-12 gap-6 items-start">
+      <div className="grid grid-cols-12 gap-20 items-start">
         {/* Left tag */}
         <div className="col-span-12 md:col-span-3 lg:col-span-2">
-          <span className="text-[11px] tracking-[0.14em] text-zinc-400">
+          <span className="text-[16px] tracking-[0.14em] text-zinc-400 font-dm-mono">
             {tag}
           </span>
         </div>
@@ -60,10 +61,8 @@ const NewsRow: React.FC<NewsItem> = ({ tag, title, href = '#' }) => {
         {/* Title */}
         <div className="col-span-10 md:col-span-8 lg:col-span-9">
           <h3
-            className="font-light leading-tight text-zinc-100 transition-colors duration-200 group-hover:text-zinc-50"
+            className=" dm-sans leading-tight text-zinc-100 transition-colors duration-200 group-hover:text-zinc-50"
             style={{
-              fontFamily:
-                'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
               fontSize: 'clamp(1.6rem, 2.6vw, 3rem)',   // bigger headline
               letterSpacing: '-0.01em',
             }}
@@ -74,7 +73,7 @@ const NewsRow: React.FC<NewsItem> = ({ tag, title, href = '#' }) => {
 
         {/* Arrow */}
         <div className="col-span-2 md:col-span-1 flex justify-end">
-          <div className="text-zinc-400 group-hover:text-zinc-200 transition-colors">
+          <div className="text-zinc-400 group-hover:text-zinc-200 transition-colors text-2xl">
             <Arrow />
           </div>
         </div>
@@ -85,31 +84,41 @@ const NewsRow: React.FC<NewsItem> = ({ tag, title, href = '#' }) => {
 
 const NewsList: React.FC = () => {
   return (
-    <section className="w-screen bg-zinc-950 text-zinc-100">
-      <div className="max-w-[1600px] mx-auto py-20 md:py-24">
-        {/* Title */}
-        <div className="px-6 md:px-12 lg:px-16 mb-12 md:mb-16">
-          <h2
-            className="text-zinc-100 font-light tracking-tight"
-            style={{
-              fontFamily:
-                'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-              fontSize: 'clamp(2.8rem, 6.2vw, 5.5rem)', // slightly larger section title
-              letterSpacing: '-0.02em',
-            }}
-          >
-            In the news
-          </h2>
-        </div>
+    <>
+      <section className="w-screen bg-zinc-950 text-zinc-100">
+        <div className="max-w-[2000px] mx-8 py-32 md:py-42">
+          {/* Title */}
+          <div className="px-6 md:px-12 lg:px-16 mb-12 md:mb-16">
+            <h2
+              className="text-zinc-100 font-light tracking-tight font-dm-sans"
+              style={{
+                 fontSize: 'clamp(2.8rem, 6.2vw, 5.2rem)', // slightly larger section title
+                letterSpacing: '-0.02em',
+              }}
+            >
+              In the news
+            </h2>
+          </div>
 
-        {/* Line-separated, larger rows */}
-        <div className="divide-y divide-zinc-800/60">
-          {items.map((n, i) => (
-            <NewsRow key={i} {...n} />
-          ))}
+          {/* Line-separated, larger rows */}
+          <div className="divide-y divide-zinc-800/60">
+            {items.map((n, i) => (
+              <NewsRow key={i} {...n} />
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <section>
+        <CurvedLoop
+          marqueeText="HELLO ROBO"
+          speed={0.4}
+          curveAmount={0}
+          direction="left"
+          interactive={false}
+          className="text-purple-600 font-dm-mono"
+        />
+      </section>
+    </>
   );
 };
 

@@ -8,22 +8,23 @@ import ContactFormSection from '@/components/ContactFormSection';
 import SplitPinnedStory from '@/components/SplitPinnedStory';
 import HelloRoboTeam from '@/components/HelloRoboTeam';
 import NewsList from '@/components/NewsList';
+import Footer from '@/components/Footer';
 
 export default function LandingPage() {
   return (
-    <div>
+    <div className="noise-bg">
       <HeroSection />
       <HeroStatsSection />
       <TechSection />
       <HeroStack />
       <PartneringSection />
-
       {/* Zoom effect applies only while this section crosses the viewport */}
-      <FullscreenZoomHero />
+      {/* <FullscreenZoomHero /> */}
       <SplitPinnedStory/>
-      <ContactFormSection/>
       <HelloRoboTeam/>
+      <ContactFormSection/>
       <NewsList/>
+      <Footer/>
     </div>
   );
 }

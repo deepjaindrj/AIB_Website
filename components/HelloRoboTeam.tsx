@@ -27,67 +27,86 @@ const members: Member[] = [
 
 const HelloRoboTeam: React.FC = () => {
   return (
-    <section className="w-screen min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center justify-center">
-      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 pt-16 md:pt-20">
-        {/* Heading + subcopy */}
-        <div className="flex flex-col items-center text-center mb-10 md:mb-14">
-          <h2
-            className="text-zinc-100 font-semibold tracking-[0.2em]"
-            style={{
-              fontFamily:
-                'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-              fontSize: 'clamp(2rem, 5.2vw, 5rem)',
-              letterSpacing: '0.16em',
-            }}
-          >
-            HELLO ROBO
-          </h2>
-          <p className="mt-4 max-w-3xl text-zinc-300/85 text-sm md:text-base leading-relaxed">
-            Made of members with backgrounds at Nike, Apple and Google, the Hello Robo
-            team mirrors real‑world expertise derived from design industry leaders.
-          </p>
-        </div>
-
-        {/* Card layout matching reference */}
-        <div className="relative w-full h-[700px] max-w-[1400px] mx-auto">
-          {/* Top-left card */}
-          <div className="absolute top-0 left-0 w-[420px] h-[420px] border border-zinc-700/40 rounded-none bg-transparent flex flex-col justify-between">
-            <div className="flex flex-col items-center mt-10">
-              <div className="w-[140px] h-[140px] bg-zinc-800 rounded-none overflow-hidden mb-2">
+    <section className="w-screen min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center justify-center font-dm-mono">
+      <div className="w-full max-w-[2000px] mx-12 px-6 md:px-10 lg:px-14 pt-16 md:pt-20">
+        
+        {/* Grid layout: 2 rows × 4 columns */}
+        <div className="grid grid-cols-4 grid-rows-2 gap-0 w-full h-[800px]">
+          
+          {/* First row, first column - Shakir with border */}
+          <div className="col-span-1 row-span-1 border border-zinc-700/40 bg-transparent relative">
+            {/* Photo - top right */} 
+            <div className="absolute top-6 right-6 p-4">
+              <div className="w-[120px] h-[120px] bg-zinc-800 overflow-hidden">
                 <img src={members[0].img} alt={members[0].name} className="w-full h-full object-cover grayscale" />
               </div>
             </div>
-            <div className="mb-10 ml-8">
-              <div className="text-2xl font-normal tracking-wide mb-2" style={{fontFamily:'Inter, system-ui'}}>{members[0].name}</div>
-              <div className="text-base text-zinc-300/90 font-normal" style={{fontFamily:'Inter, system-ui'}}>{members[0].role}</div>
+            
+            {/* Text - bottom left */}
+            <div className="absolute bottom-8 left-8">
+              <div className="text-xl font-normal tracking-wide mb-2 text-white" style={{fontFamily:'DM Sans'}}>{members[0].name}</div>
+              <div className="text-sm text-zinc-300/90 font-normal" style={{fontFamily:'DM Mono'}}>{members[0].role}</div>
             </div>
           </div>
 
-          {/* Top-right card */}
-          <div className="absolute top-0 right-0 w-[420px] h-[420px] border border-zinc-700/40 rounded-none bg-transparent flex flex-col justify-between">
-            <div className="flex flex-col items-center mt-10">
-              <div className="w-[140px] h-[140px] bg-zinc-800 rounded-none overflow-hidden mb-2">
+          {/* First row, second & third columns merged - HELLO ROBO centered */}
+          <div className="col-span-2 row-span-1 bg-transparent flex flex-col items-center justify-center">
+            <h2
+              className="text-zinc-100 font-semibold tracking-[0.2em] text-center"
+              style={{
+                fontFamily: 'DM Sans',
+                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                letterSpacing: '0.16em',
+              }}
+            >
+              HELLO ROBO
+            </h2>
+            <p className="mt-6 max-w-[450px] text-zinc-300/85 text-center text-sm leading-relaxed">
+              Made of members with backgrounds at Nike, Apple and Google, the Hello Robo team mirrors real‑world expertise derived from design industry leaders.
+            </p>
+          </div>
+
+          {/* First row, fourth column - Joe with border */}
+          <div className="col-span-1 row-span-1 border border-zinc-700/40 bg-transparent relative">
+            {/* Photo - top right */}
+            <div className="absolute top-6 right-6 p-4">
+              <div className="w-[120px] h-[120px] bg-zinc-800 overflow-hidden">
                 <img src={members[1].img} alt={members[1].name} className="w-full h-full object-cover grayscale" />
               </div>
             </div>
-            <div className="mb-10 ml-8">
-              <div className="text-2xl font-normal tracking-wide mb-2" style={{fontFamily:'Inter, system-ui'}}>{members[1].name}</div>
-              <div className="text-base text-zinc-300/90 font-normal" style={{fontFamily:'Inter, system-ui'}}>{members[1].role}</div>
+            
+            {/* Text - bottom left */}
+            <div className="absolute bottom-8 left-8">
+              <div className="text-xl font-normal tracking-wide mb-2 text-white" style={{fontFamily:'DM Sans'}}>{members[1].name}</div>
+              <div className="text-sm text-zinc-300/90 font-normal" style={{fontFamily:'DM Mono'}}>{members[1].role}</div>
             </div>
           </div>
 
-          {/* Bottom-center card */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[420px] h-[420px] border border-zinc-700/40 rounded-none bg-transparent flex flex-col justify-between">
-            <div className="flex flex-col items-center mt-10">
-              <div className="w-[140px] h-[140px] bg-zinc-800 rounded-none overflow-hidden mb-2">
+          {/* Second row, first column - empty */}
+          <div className="col-span-1 row-span-1 bg-transparent"></div>
+
+          {/* Second row, second column - Vlad with border */}
+          <div className="col-span-1 row-span-1 border border-zinc-700/40 bg-transparent relative">
+            {/* Photo - top right */}
+            <div className="absolute top-6 right-6 p-4">
+              <div className="w-[120px] h-[120px] bg-zinc-800 overflow-hidden">
                 <img src={members[2].img} alt={members[2].name} className="w-full h-full object-cover grayscale" />
               </div>
             </div>
-            <div className="mb-10 ml-8">
-              <div className="text-2xl font-normal tracking-wide mb-2" style={{fontFamily:'Inter, system-ui'}}>{members[2].name}</div>
-              <div className="text-base text-zinc-300/90 font-normal" style={{fontFamily:'Inter, system-ui'}}>{members[2].role}</div>
+            
+            {/* Text - bottom left */}
+            <div className="absolute bottom-8 left-8 ">
+              <div className="text-xl font-normal tracking-wide mb-2 text-white" style={{fontFamily:'DM Sans'}}>{members[2].name}</div>
+              <div className="text-sm text-zinc-300/90 font-normal" style={{fontFamily:'DM Mono'}}>{members[2].role}</div>
             </div>
           </div>
+
+          {/* Second row, third column - empty */}
+          <div className="col-span-1 row-span-1 bg-transparent"></div>
+
+          {/* Second row, fourth column - empty */}
+          <div className="col-span-1 row-span-1 bg-transparent"></div>
+
         </div>
       </div>
     </section>

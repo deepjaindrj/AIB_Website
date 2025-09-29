@@ -46,6 +46,9 @@ const RadarSection: React.FC = () => {
   const circleClockwiseRef = useRef<SVGGElement | null>(null);
   const circleCounterRef = useRef<SVGGElement | null>(null);
   const tickRef = useRef<SVGGElement | null>(null);
+  // Fix hydration mismatch: only render mask paths on client
+  const [isClient, setIsClient] = React.useState(false);
+  React.useEffect(() => { setIsClient(true); }, []);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -88,16 +91,15 @@ const RadarSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="w-screen h-screen bg-zinc-950">
-      <div className="h-full w-full grid grid-cols-1 lg:grid-cols-12">
+  <section className="w-screen h-screen bg-zinc-950 overflow-x-hidden">
+  <div className="h-full w-full max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-12 max-w-full overflow-x-hidden">
         <div className="lg:col-span-6 flex items-center">
           <div className="px-8 md:px-16 lg:pl-24 lg:pr-8 max-w-4xl">
-            <h1
+            <h3
               className="text-zinc-100 font-light tracking-tight"
               style={{
-                fontFamily:
-                  'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                fontSize: 'clamp(2.75rem, 5.5vw, 7rem)',
+                fontFamily: 'DM Sans',
+                fontSize: 'clamp(2.75rem, 5.5vw, 4.5rem)',
                 lineHeight: 1.08,
                 letterSpacing: '-0.02em',
               }}
@@ -105,12 +107,11 @@ const RadarSection: React.FC = () => {
               Design interfaces
               <br />
               customers actually use
-            </h1>
+            </h3>
             <p
               className="mt-8 text-zinc-400"
               style={{
-                fontFamily:
-                  'Evo, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                fontFamily: 'DM Mono',
                 fontSize: 'clamp(0.95rem, 1.2vw, 1.375rem)',
                 lineHeight: 1.7,
                 letterSpacing: '-0.005em',
@@ -128,14 +129,13 @@ const RadarSection: React.FC = () => {
             <svg viewBox="0 0 617 614" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <mask id="mask0_radar" style={{maskType: 'alpha'}} maskUnits="userSpaceOnUse" x="5" y="4" width="606" height="605">
-                  {/* Radial lines creating the radar sweep mask */}
-                  {Array.from({ length: 120 }).map((_, i) => {
+                  {/* Radial lines creating the radar sweep mask - only render on client to avoid hydration mismatch */}
+                  {isClient && Array.from({ length: 120 }).map((_, i) => {
                     const angle = (i / 120) * 360;
                     const startAngle = (angle - 2) * (Math.PI / 180);
                     const endAngle = (angle + 2) * (Math.PI / 180);
                     const innerR = 60;
                     const outerR = 300;
-                    
                     const x1 = 308 + Math.cos(startAngle) * innerR;
                     const y1 = 307 + Math.sin(startAngle) * innerR;
                     const x2 = 308 + Math.cos(startAngle) * outerR;
@@ -144,7 +144,6 @@ const RadarSection: React.FC = () => {
                     const y3 = 307 + Math.sin(endAngle) * outerR;
                     const x4 = 308 + Math.cos(endAngle) * innerR;
                     const y4 = 307 + Math.sin(endAngle) * innerR;
-                    
                     return (
                       <path
                         key={i}
@@ -334,16 +333,15 @@ const CommercialSection: React.FC = () => {
   };
 
   return (
-    <section className="w-screen h-screen bg-zinc-950">
-      <div className="h-full w-full grid grid-cols-1 lg:grid-cols-12">
+  <section className="w-screen h-screen bg-zinc-950 overflow-x-hidden">
+  <div className="h-full w-full max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-12 max-w-full overflow-x-hidden">
         <div className="lg:col-span-6 flex items-center">
           <div className="px-8 md:px-16 lg:pl-24 lg:pr-8 max-w-4xl">
-            <h2
+            <h3
               className="text-zinc-100 font-light tracking-tight"
               style={{
-                fontFamily:
-                  'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                fontSize: 'clamp(2.5rem, 5vw, 6.25rem)',
+                fontFamily: 'DM Sans',
+                fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
                 lineHeight: 1.1,
                 letterSpacing: '-0.02em',
               }}
@@ -351,12 +349,11 @@ const CommercialSection: React.FC = () => {
               Design for commercial
               <br />
               drivers of success
-            </h2>
+            </h3>
             <p
               className="mt-8 text-zinc-400"
               style={{
-                fontFamily:
-                  'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                fontFamily: 'DM Mono',
                 fontSize: 'clamp(0.95rem, 1.2vw, 1.25rem)',
                 lineHeight: 1.7,
                 letterSpacing: '-0.005em',
@@ -495,16 +492,15 @@ const BrandSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="w-screen h-screen bg-zinc-950">
-      <div className="h-full w-full grid grid-cols-1 lg:grid-cols-12">
+  <section className="w-screen h-screen bg-zinc-950 overflow-x-hidden">
+  <div className="h-full w-full max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-12 max-w-full overflow-x-hidden">
         <div className="lg:col-span-6 flex items-center">
           <div className="px-8 md:px-16 lg:pl-24 lg:pr-8 max-w-4xl">
-            <h2
+            <h3
               className="text-zinc-100 font-light tracking-tight"
               style={{
-                fontFamily:
-                  'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                fontSize: 'clamp(2.8rem, 6vw, 7rem)',
+                fontFamily: 'DM Sans',
+                fontSize: 'clamp(2.8rem, 6vw, 5rem)',
                 lineHeight: 1.08,
                 letterSpacing: '-0.02em',
               }}
@@ -512,12 +508,11 @@ const BrandSection: React.FC = () => {
               Your interface
               <br />
               is your brand
-            </h2>
+            </h3>
             <p
               className="mt-8 text-zinc-400"
               style={{
-                fontFamily:
-                  'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                fontFamily: 'DM Mono',
                 fontSize: 'clamp(0.95rem, 1.2vw, 1.25rem)',
                 lineHeight: 1.7,
                 letterSpacing: '-0.005em',
@@ -572,8 +567,7 @@ const BrandSection: React.FC = () => {
                   fill="#E4E4E7"
                   opacity="0.9"
                   style={{
-                    fontFamily:
-                      'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                    fontFamily: 'DM Sans',
                     fontSize: 24,
                     letterSpacing: '0.08em',
                   }}
