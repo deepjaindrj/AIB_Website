@@ -84,7 +84,7 @@ const SplitPinnedStory: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-screen bg-zinc-950 text-zinc-100 overflow-hidden">
+    <section ref={sectionRef} className="w-screen bg-zinc-950 text-zinc-100 overflow-x-hidden">
       <div className="max-w-[1400px] mx-12 px-6 md:px-10 lg:px-14 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-[130px]">
           {/* Left: vertical stack of 3 image cards, animated upward */}

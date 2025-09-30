@@ -44,7 +44,7 @@ const TagItem: React.FC<{ tag: string }> = ({ tag }) => (
 const TechSection = () => {
   return (
     <section className="min-h-screen bg-zinc-950 flex items-center justify-center overflow-hidden">
-      <div className="w-full w-[90vw] mx-auto px-16 h-[80vh] border border-zinc-800">
+      <div className="w-[90vw] mx-auto px-16 h-[80vh] border border-zinc-800">
         <div className="grid grid-cols-2 gap-8 h-full">
           {/* Left side - Text content */}
           <div className="flex flex-col justify-center items-start">

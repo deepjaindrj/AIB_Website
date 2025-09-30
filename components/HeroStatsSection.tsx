@@ -140,14 +140,14 @@ const HeroStatsSection: React.FC = () => {
       title: "TRUST",
       value: "90",
       suffix: "%", 
-      description: "of clients come back to us for a second project",
+      description: "of clients come back to us for a second project again",
       countDuration: 7
     },
     {
       title: "",
       value: "7",
       suffix: "",
-      description: "Early stage startups that successfully scaled",
+      description: "Early stage startups that successfully scaled up",
       hasOrangeDot: true,
       countDuration: 5
     }
@@ -160,7 +160,7 @@ const HeroStatsSection: React.FC = () => {
           
           {/* Hero Text Section */}
           <div ref={heroRef} className="max-w-4xl mx-auto mb-24">
-            <div className="text-center mx-auto max-w-4xl text-zinc-100 text-3xl leading-[1.4] font-dm-sans overflow-hidden">
+            <div className="mt-12 text-center mx-auto max-w-4xl text-zinc-100 text-xl leading-[1.4] font-dm-sans overflow-hidden">
               {[
                 "Hello Robo is a digital product design agency that",
 "turns complex technology into intuitive, usable",
