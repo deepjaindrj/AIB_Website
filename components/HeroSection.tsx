@@ -27,13 +27,12 @@ export default function HeroSection() {
       if (currentImageIndex < preloadImages.length - 1) {
         setCurrentImageIndex(prev => prev + 1);
       } else {
-        // Wait a few seconds before expanding the last image
         setTimeout(() => {
           setIsLoading(false);
           setTimeout(() => {
             setShowContent(true);
-          }, 1200); // allow expansion animation to finish
-        }, 1000); // 1 second delay before expanding
+          }, 1200);
+        }, 1000);
       }
     }, 200);
 
@@ -41,7 +40,7 @@ export default function HeroSection() {
   }, [currentImageIndex, preloadImages.length]);
 
   return (
-    <div className="relative min-h-screen bg-black overflow-hidden">
+    <div className="relative min-h-screen bg-black" style={{ overflow: 'hidden' }}>
       {/* Final Background */}
       <div className="absolute inset-0 z-0">
         <img
@@ -73,8 +72,7 @@ export default function HeroSection() {
             </div>
             
             {/* Center Navigation */}
-            
-            <div className="hidden md:flex items-center space-x-0 bg-black/40 backdrop-blur-sm rounded-lg px-2 py-2">
+            <div className="font-dm-mono hidden md:flex items-center space-x-0 bg-black/40 backdrop-blur-sm rounded-lg px-2 py-2">
               <div className="px-6 py-2 bg-purple-600 text-white text-sm font-medium rounded">AGENCY</div>
               <div className="px-6 py-2 text-gray-400 text-sm font-medium hover:text-white transition-colors">APPROACH</div>
               <div className="px-6 py-2 text-gray-400 text-sm font-medium hover:text-white transition-colors">WORK</div>
@@ -83,7 +81,7 @@ export default function HeroSection() {
             </div>
             
             {/* Let's Chat Button */}
-            <button className="px-6 py-3 bg-purple-600 hover:bg-purple-600 text-white font-medium text-sm transition-all duration-300">
+            <button className="font-dm-mono px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium text-sm transition-all duration-300">
               LET'S CHAT
             </button>
           </motion.div>
@@ -94,12 +92,12 @@ export default function HeroSection() {
       <AnimatePresence>
         {showContent && (
           <motion.div
-            className="absolute bottom-16 left-8 z-30"
+            className="absolute bottom-16 left-8 z-30 font-dm-sans"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.0 }}
           >
-            <h1 className="text-white text-5xl md:text-7xl font-light leading-tight">
+            <h1 className="text-white text-5xl md:text-7xl leading-tight font-dm-sans">
               Distilling complex tech<br />
               into simple, usable interfaces
             </h1>
@@ -107,15 +105,16 @@ export default function HeroSection() {
         )}
       </AnimatePresence>
 
-      {/* Preloader */}
+      {/* Preloader - Fixed positioning with overflow containment */}
       <AnimatePresence>
         {isLoading && (
           <motion.div
             className="fixed inset-0 z-50 bg-black"
+            style={{ overflow: 'hidden' }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center justify-center" style={{ overflow: 'hidden' }}>
               {/* Stacked images except last */}
               {preloadImages.map((image, index) => (
                 index < preloadImages.length - 1 && (
@@ -123,12 +122,11 @@ export default function HeroSection() {
                     key={index}
                     className="absolute"
                     style={{
-                      width: '55vw',
-                      height: '35vw', // 4:3 ratio
-                      maxWidth: '800px',
-                      maxHeight: '600px',
+                      width: 'min(50vw, 600px)',
+                      height: 'min(37.5vw, 450px)',
                       left: '50%',
                       top: '50%',
+                      overflow: 'hidden',
                     }}
                     initial={{
                       opacity: 0,
@@ -169,10 +167,11 @@ export default function HeroSection() {
                     left: '50%',
                     top: '50%',
                     transform: 'translate(-50%, -50%)',
+                    overflow: 'hidden',
                   }}
                   initial={{
-                    width: '60vw',
-                    height: '45vw', // 4:3 ratio
+                    width: 'min(55vw, 650px)',
+                    height: 'min(41.25vw, 487.5px)',
                     borderRadius: '0px',
                   }}
                   animate={{

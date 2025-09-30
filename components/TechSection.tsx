@@ -34,7 +34,7 @@ const TagItem: React.FC<{ tag: string }> = ({ tag }) => (
       </defs>
     </svg>
     <div className="absolute inset-0 flex items-center justify-center">
-  <span className="text-zinc-200 text-base font-medium tracking-wide" style={{ fontFamily: 'DM Sans' }}>
+  <span className="text-zinc-200 text-base font-medium tracking-wide font-dm-mono">
         {tag}
       </span>
     </div>
@@ -43,18 +43,18 @@ const TagItem: React.FC<{ tag: string }> = ({ tag }) => (
 
 const TechSection = () => {
   return (
-    <section className="min-h-screen bg-zinc-950 flex items-center justify-center">
-      <div className="w-full max-w-8xl mx-auto px-16 h-[80vh] border border-zinc-800">
+    <section className="min-h-screen bg-zinc-950 flex items-center justify-center overflow-hidden">
+      <div className="w-full w-[90vw] mx-auto px-16 h-[80vh] border border-zinc-800">
         <div className="grid grid-cols-2 gap-8 h-full">
           {/* Left side - Text content */}
           <div className="flex flex-col justify-center items-start">
             <div className="space-y-8">
-              <h1 className="text-6xl lg:text-7xl xl:text-8xl font-light text-zinc-100 tracking-tight leading-none" style={{ fontFamily: 'DM Sans' }}>
+              <h1 className="text-6xl lg:text-7xl xl:text-8xl font-light text-zinc-100 tracking-tight leading-none font-dm-sans" >
                 Hard tech
               </h1>
               
               <div className="max-w-lg">
-                <p className="text-lg lg:text-xl text-zinc-400 leading-relaxed" style={{ fontFamily: 'DM Mono' }}>
+                <p className="text-lg lg:text-xl text-zinc-400 leading-relaxed font-dm-mono">
                   From robotics and AI to automation, aerospace, and advanced systems. Our work translates deep tech into clear, usable, and market-ready interfaces.
                 </p>
               </div>
@@ -64,7 +64,7 @@ const TechSection = () => {
           {/* Right side - Scrolling tags */}
           <div className="flex justify-end items-center">
             <div className="relative w-[600px] h-[80vh] overflow-hidden">
-              <div className="absolute inset-0 animate-scroll-down">
+              <div className="absolute inset-0 animate-scroll-down font-dm-mono">
                 <div className="flex flex-col">
                   {techTags.map((tag, i) => (
                     <TagItem key={`first-${i}`} tag={tag} />

@@ -332,9 +332,8 @@ const PartneringSection: React.FC = () => {
           <div className="flex items-center justify-center">
             <div className="max-w-[600px] text-center">
               <h1
-                className="text-white font-light tracking-tight mb-12 leading-none"
+                className=" font-dm-sans text-white font-light tracking-tight mb-12 leading-none"
                 style={{
-                  fontFamily: 'DM Sans',
                   fontSize: 'clamp(4rem, 7vw, 4.5rem)',
                   letterSpacing: '-0.03em',
                 }}
@@ -344,9 +343,8 @@ const PartneringSection: React.FC = () => {
               </h1>
               
               <p
-                className="text-white/80 max-w-lg mx-auto opacity-90 leading-relaxed"
+                className=" font-dm-mono text-white/80 max-w-lg mx-auto opacity-90 leading-relaxed"
                 style={{
-                  fontFamily: 'DM Mono',
                   fontSize: 'clamp(1.1rem, 1.3vw, 1.2rem)',
                   letterSpacing: '-0.015em',
                   lineHeight: 1.65,

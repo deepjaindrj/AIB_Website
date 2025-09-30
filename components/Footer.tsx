@@ -31,7 +31,7 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
   ];
 
   return (
-    <footer className={`bg-white text-black py-16 px-2 pb-72 font-dm-mono ${className}`}>
+    <footer className={`bg-white text-black py-16 px-2 pb-72 font-dm-mono overflow-hidden ${className}`}>
       <div className="max-w-8xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-3">
           

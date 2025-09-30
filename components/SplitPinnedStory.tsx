@@ -84,7 +84,7 @@ const SplitPinnedStory: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-screen bg-zinc-950 text-zinc-100">
+    <section ref={sectionRef} className="w-screen bg-zinc-950 text-zinc-100 overflow-hidden">
       <div className="max-w-[1400px] mx-12 px-6 md:px-10 lg:px-14 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-[130px]">
           {/* Left: vertical stack of 3 image cards, animated upward */}
@@ -95,13 +95,13 @@ const SplitPinnedStory: React.FC = () => {
                 <div className="absolute top-6 right-6 w-2 h-2 bg-purple-600 rounded-sm"></div>
                 <div className="flex-1 min-w-0 flex flex-col h-full justify-between">
                   <div>
-                    <div className="text-base font-medium tracking-widest text-zinc-300/80 mb-56">
+                    <div className="text-base font-medium tracking-widest text-zinc-300/80 mb-56 font-dm-sans">
                       UNDERSTANDING CUSTOMERS
                       <br className="hidden md:block" />
                       AND YOUR MARKET
                     </div>
                   </div>
-                  <ul className="mt-28 text-base font-medium text-zinc-300/90 leading-7">
+                  <ul className="mt-28 text-base font-medium text-zinc-300/90 leading-7 font-dm-mono">
                     <li>Customer interviews</li>
                     <li>Stakeholder interviews</li>
                     <li>Market research</li>
@@ -123,13 +123,13 @@ const SplitPinnedStory: React.FC = () => {
                 <div className="absolute top-6 right-6 w-2 h-2 bg-purple-600 rounded-sm"></div>
                 <div className="flex-1 min-w-0 flex flex-col h-full justify-between">
                   <div>
-                    <div className="text-base font-medium tracking-widest text-zinc-300/80 mb-56">
+                    <div className="text-base font-medium tracking-widest text-zinc-300/80 mb-56 font-dm-sans">
                       DESIGN FOR COMMERCIAL
                       <br className="hidden md:block" />
                       DRIVERS OF SUCCESS
                     </div>
                   </div>
-                  <ul className="mt-28 text-base font-medium text-zinc-300/90 leading-7">
+                  <ul className="mt-28 text-base font-medium text-zinc-300/90 leading-7 font-dm-mono">
                     <li>UI/UX design</li>
                     <li>Data visualization</li>
                     <li>UI animation</li>
@@ -151,11 +151,11 @@ const SplitPinnedStory: React.FC = () => {
                 <div className="absolute top-6 right-6 w-2 h-2 bg-purple-600 rounded-sm"></div>
                 <div className="flex-1 min-w-0 flex flex-col h-full justify-between">
                   <div>
-                    <div className="text-base font-medium tracking-widest text-zinc-300/80 mb-56">
+                    <div className="text-base font-medium tracking-widest text-zinc-300/80 mb-56 font-dm-sans">
                       MARKET-READY PRODUCT DESIGN
                     </div>
                   </div>
-                  <ul className="mt-28 text-base font-medium text-zinc-300/90 leading-7">
+                  <ul className="mt-28 text-base font-medium text-zinc-300/90 leading-7 font-dm-mono" >
                     <li>UI/UX design</li>
                     <li>Data visualization</li>
                     <li>UI animation</li>
@@ -178,9 +178,8 @@ const SplitPinnedStory: React.FC = () => {
           <div className="lg:col-span-6 min-h-[60vh]">
             <div ref={rightRef} className="w-full lg:max-w-[640px] mx-auto sticky top-1/2 transform -translate-y-1/2">
               <p
-                className="text-zinc-200/95 font-light leading-[1.6]"
+                className="font-dm-mono text-zinc-200/95 font-light leading-[1.4]"
                 style={{
-                  fontFamily: 'DM Mono',
                   fontSize: 'clamp(1.1rem, 1.4vw, 3rem)',
                   letterSpacing: '-0.01em',
                 }}

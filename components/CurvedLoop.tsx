@@ -133,8 +133,7 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
             visibility: 'hidden',
             opacity: 0,
             pointerEvents: 'none',
-            fontFamily: 'DM Sans',
-            fontWeight: 400,
+            fontWeight: 300,
           }}
         >
           {text}
@@ -148,7 +147,6 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
             className={`fill-purple-600  ${className ?? ''}`}
             textAnchor="middle"
             dominantBaseline="middle"
-            style={{ fontFamily: 'DM Sans', fontWeight: 400 }}
           >
             <textPath
               ref={textPathRef}

@@ -93,7 +93,7 @@ const StatCard: React.FC<StatCardProps> = ({
         )}
         
         {/* Title (eyebrow) */}
-        <div className="text-zinc-500 uppercase text-sm tracking-wider">
+        <div className="text-zinc-500 uppercase text-lg tracking-wider font-dm-mono">
           {title}
         </div>
       </div>
@@ -101,14 +101,14 @@ const StatCard: React.FC<StatCardProps> = ({
       {/* Bottom section - Stats and Description */}
       <div>
         {/* Large number with suffix */}
-        <div className="text-white mb-3 text-6xl font-light leading-none tracking-tight">
+        <div className="text-white mb-3 text-6xl font-light leading-none tracking-tight font-dm-sans">
           <AnimatedCounter value={value} inView={isInView} duration={countDuration} />
           {suffix}
         </div>
         
         {/* Description */}
         <div 
-          className="text-zinc-400 text-sm leading-relaxed max-w-none"
+          className="text-zinc-400 text-md  max-w-none font-dm-mono"
         >
           {description}
         </div>
@@ -160,9 +160,9 @@ const HeroStatsSection: React.FC = () => {
           
           {/* Hero Text Section */}
           <div ref={heroRef} className="max-w-4xl mx-auto mb-24">
-            <div className="text-center mx-auto max-w-4xl text-zinc-100 text-3xl leading-[1.4]">
+            <div className="text-center mx-auto max-w-4xl text-zinc-100 text-3xl leading-[1.4] font-dm-sans overflow-hidden">
               {[
-                "HHello Robo is a digital product design agency that",
+                "Hello Robo is a digital product design agency that",
 "turns complex technology into intuitive, usable",
 "interfaces. We work with forward-thinking teams",
 "to create market-ready digital products that are",

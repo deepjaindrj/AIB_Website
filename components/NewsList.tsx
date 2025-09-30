@@ -85,7 +85,7 @@ const NewsRow: React.FC<NewsItem> = ({ tag, title, href = '#' }) => {
 const NewsList: React.FC = () => {
   return (
     <>
-      <section className="w-screen bg-zinc-950 text-zinc-100">
+      <section className="w-screen bg-zinc-950 text-zinc-100 overflow-hidden">
         <div className="max-w-[2000px] mx-8 py-32 md:py-42">
           {/* Title */}
           <div className="px-6 md:px-12 lg:px-16 mb-12 md:mb-16">
@@ -115,7 +115,7 @@ const NewsList: React.FC = () => {
           curveAmount={0}
           direction="left"
           interactive={false}
-          className="text-purple-600 font-dm-mono"
+          className="text-purple-600 font-dm-sans"
         />
       </section>
     </>

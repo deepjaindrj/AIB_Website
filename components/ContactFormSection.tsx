@@ -78,7 +78,7 @@ const ContactFormSection: React.FC = () => {
   };
 
   return (
-    <section className="w-screen min-h-screen bg-zinc-950 text-zinc-100">
+    <section className="w-screen min-h-screen bg-zinc-950 text-zinc-100 overflow-hidden">
       <div className="max-w-[1500px] mx-10 px-6 md:px-10 lg:px-18 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
           {/* Left headline */}

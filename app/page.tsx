@@ -12,7 +12,7 @@ import Footer from '@/components/Footer';
 
 export default function LandingPage() {
   return (
-    <div className="noise-bg">
+    <div className="noise-bg ">
       <HeroSection />
       <HeroStatsSection />
       <TechSection />

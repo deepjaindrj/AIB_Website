@@ -96,10 +96,9 @@ const RadarSection: React.FC = () => {
         <div className="lg:col-span-6 flex items-center">
           <div className="px-8 md:px-16 lg:pl-24 lg:pr-8 max-w-4xl">
             <h3
-              className="text-zinc-100 font-light tracking-tight"
+              className="text-zinc-100 font-light tracking-tight font-dm-sans"
               style={{
-                fontFamily: 'DM Sans',
-                fontSize: 'clamp(2.75rem, 5.5vw, 4.5rem)',
+                fontSize: 'clamp(2.25rem, 4.5vw, 4.0rem)',
                 lineHeight: 1.08,
                 letterSpacing: '-0.02em',
               }}
@@ -109,13 +108,12 @@ const RadarSection: React.FC = () => {
               customers actually use
             </h3>
             <p
-              className="mt-8 text-zinc-400"
+              className="mt-8 text-zinc-400 font-dm-mono"
               style={{
-                fontFamily: 'DM Mono',
                 fontSize: 'clamp(0.95rem, 1.2vw, 1.375rem)',
-                lineHeight: 1.7,
+                lineHeight: 1.4,
                 letterSpacing: '-0.005em',
-                maxWidth: '42ch',
+                maxWidth: '45ch',
               }}
             >
               We turn complex technology into intuitive interfaces—guided by real customer insight. The result: stronger
@@ -340,8 +338,7 @@ const CommercialSection: React.FC = () => {
             <h3
               className="text-zinc-100 font-light tracking-tight"
               style={{
-                fontFamily: 'DM Sans',
-                fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
+                fontSize: 'clamp(2.0rem, 4.5vw, 4.0rem)',
                 lineHeight: 1.1,
                 letterSpacing: '-0.02em',
               }}
@@ -351,13 +348,12 @@ const CommercialSection: React.FC = () => {
               drivers of success
             </h3>
             <p
-              className="mt-8 text-zinc-400"
+              className="mt-8 text-zinc-400 font-dm-mono"
               style={{
-                fontFamily: 'DM Mono',
                 fontSize: 'clamp(0.95rem, 1.2vw, 1.25rem)',
-                lineHeight: 1.7,
+                lineHeight: 1.4,
                 letterSpacing: '-0.005em',
-                maxWidth: '48ch',
+                maxWidth: '45ch',
               }}
             >
               We prioritize the commercial drivers behind your product—revenue, retention, and growth. Every feature we
@@ -497,10 +493,9 @@ const BrandSection: React.FC = () => {
         <div className="lg:col-span-6 flex items-center">
           <div className="px-8 md:px-16 lg:pl-24 lg:pr-8 max-w-4xl">
             <h3
-              className="text-zinc-100 font-light tracking-tight"
+              className="text-zinc-100 font-light tracking-tight font-dm-sans"
               style={{
-                fontFamily: 'DM Sans',
-                fontSize: 'clamp(2.8rem, 6vw, 5rem)',
+                fontSize: 'clamp(2.0rem, 4.5vw, 4.5rem)',
                 lineHeight: 1.08,
                 letterSpacing: '-0.02em',
               }}
@@ -510,13 +505,12 @@ const BrandSection: React.FC = () => {
               is your brand
             </h3>
             <p
-              className="mt-8 text-zinc-400"
+              className="mt-8 text-zinc-400 font-dm-mono"
               style={{
-                fontFamily: 'DM Mono',
                 fontSize: 'clamp(0.95rem, 1.2vw, 1.25rem)',
-                lineHeight: 1.7,
+                lineHeight: 1.4,
                 letterSpacing: '-0.005em',
-                maxWidth: '48ch',
+                maxWidth: '45ch',
               }}
             >
               We design with that in mind—crafting signature moments through motion, tone, and detail that
