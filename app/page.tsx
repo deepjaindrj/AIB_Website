@@ -12,19 +12,23 @@ import Footer from '@/components/Footer';
 
 export default function LandingPage() {
   return (
-    <div className="noise-bg ">
-      <HeroSection />
-      <HeroStatsSection />
-      <TechSection />
-      <HeroStack />
-      <PartneringSection />
-      {/* Zoom effect applies only while this section crosses the viewport */}
-      {/* <FullscreenZoomHero /> */}
-      <SplitPinnedStory/>
-      <HelloRoboTeam/>
-      <ContactFormSection/>
-      <NewsList/>
-      <Footer/>
+    <div className="noise-bg">
+      <div
+        style={{ width: '100vw', margin: 'aut0 auto' }}
+      >
+        <HeroSection />
+        <HeroStatsSection />
+        <TechSection />
+        <HeroStack />
+        <PartneringSection />
+        {/* Zoom effect applies only while this section crosses the viewport */}
+        {/* <FullscreenZoomHero /> */}
+        <SplitPinnedStory/>
+        <HelloRoboTeam/>
+        <ContactFormSection/>
+        <NewsList/>
+        <Footer/>
+      </div>
     </div>
   );
 }

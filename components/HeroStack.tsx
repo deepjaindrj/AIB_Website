@@ -1,5 +1,5 @@
 'use client';
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 
@@ -23,7 +23,6 @@ function orbitSafe(
   }
 
   gsap.delayedCall(delay, () => {
-    // Recheck still valid after a tick
     if (!(el instanceof Element) || !(path instanceof SVGPathElement)) return;
 
     gsap.to(el, {
@@ -41,12 +40,10 @@ function orbitSafe(
 }
 
 /* ========== SECTION 1: Radar Hero ========== */
-/* ========== SECTION 1: Radar Hero ========== */
 const RadarSection: React.FC = () => {
   const circleClockwiseRef = useRef<SVGGElement | null>(null);
   const circleCounterRef = useRef<SVGGElement | null>(null);
   const tickRef = useRef<SVGGElement | null>(null);
-  // Fix hydration mismatch: only render mask paths on client
   const [isClient, setIsClient] = React.useState(false);
   React.useEffect(() => { setIsClient(true); }, []);
 
@@ -54,7 +51,6 @@ const RadarSection: React.FC = () => {
     const ctx = gsap.context(() => {
       const origin = '50% 50%';
 
-      // Rotating tick marks around the perimeter
       if (tickRef.current) {
         gsap.to(tickRef.current, { 
           rotation: 360, 
@@ -65,7 +61,6 @@ const RadarSection: React.FC = () => {
         });
       }
 
-      // Clockwise rotating circle with mask
       if (circleClockwiseRef.current) {
         gsap.to(circleClockwiseRef.current, { 
           rotation: 360, 
@@ -76,7 +71,6 @@ const RadarSection: React.FC = () => {
         });
       }
 
-      // Counter-clockwise rotating elements
       if (circleCounterRef.current) {
         gsap.to(circleCounterRef.current, { 
           rotation: -360, 
@@ -91,15 +85,15 @@ const RadarSection: React.FC = () => {
   }, []);
 
   return (
-  <section className="w-screen h-screen bg-zinc-950 overflow-x-hidden">
-  <div className="h-full w-full max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-12 max-w-full overflow-x-hidden">
-        <div className="lg:col-span-6 flex items-center">
+    <section className="w-full h-screen bg-zinc-950">
+      <div className="h-full w-full max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-12">
+        <div className="lg:col-span-6 flex items-start pt-32">
           <div className="px-8 md:px-16 lg:pl-24 lg:pr-8 max-w-4xl">
             <h3
-              className="text-zinc-100 font-light tracking-tight font-dm-sans"
+              className="text-zinc-100 font-light tracking-tight"
               style={{
-                fontSize: 'clamp(2.25rem, 4.5vw, 4.0rem)',
-                lineHeight: 1.08,
+                fontSize: 'clamp(1.75rem, 3.5vw, 3.0rem)',
+                lineHeight: 1.1,
                 letterSpacing: '-0.02em',
               }}
             >
@@ -108,10 +102,10 @@ const RadarSection: React.FC = () => {
               customers actually use
             </h3>
             <p
-              className="mt-8 text-zinc-400 font-dm-mono"
+              className="mt-6 text-zinc-400"
               style={{
-                fontSize: 'clamp(0.95rem, 1.2vw, 1.375rem)',
-                lineHeight: 1.4,
+                fontSize: 'clamp(0.875rem, 1.1vw, 1.125rem)',
+                lineHeight: 1.5,
                 letterSpacing: '-0.005em',
                 maxWidth: '45ch',
               }}
@@ -122,12 +116,11 @@ const RadarSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="lg:col-span-6 relative flex items-center justify-center">
-          <div className="w-[92%] max-w-[820px] aspect-square">
+        <div className="lg:col-span-6 relative flex items-center justify-center overflow-hidden">
+          <div className="w-[70%] max-w-[600px] aspect-square">
             <svg viewBox="0 0 617 614" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <mask id="mask0_radar" style={{maskType: 'alpha'}} maskUnits="userSpaceOnUse" x="5" y="4" width="606" height="605">
-                  {/* Radial lines creating the radar sweep mask - only render on client to avoid hydration mismatch */}
                   {isClient && Array.from({ length: 120 }).map((_, i) => {
                     const angle = (i / 120) * 360;
                     const startAngle = (angle - 2) * (Math.PI / 180);
@@ -155,15 +148,12 @@ const RadarSection: React.FC = () => {
                 </mask>
               </defs>
 
-              {/* Masked rotating circle */}
               <g mask="url(#mask0_radar)" ref={circleClockwiseRef}>
-                <circle cx="308" cy="307" r="276" fill="white" />
+                <circle cx="308" cy="307" r="276" fill="#151518" />
               </g>
 
-              {/* Outer circle border */}
               <circle cx="308" cy="306" r="281" stroke="#4B4B54" strokeWidth="0.8" fill="none" />
 
-              {/* Dashed arc */}
               <path 
                 d="M 496 305 C 496 409.381 411.382 494 307 494" 
                 stroke="white" 
@@ -172,14 +162,11 @@ const RadarSection: React.FC = () => {
                 fill="none" 
               />
 
-              {/* Crosshair lines */}
               <line x1="307" y1="557" x2="307" y2="57" stroke="white" strokeWidth="0.8" />
               <line x1="557" y1="306" x2="57" y2="306" stroke="white" strokeWidth="0.8" />
 
-              {/* Central dark circle with text */}
               <circle cx="308" cy="306" r="113" fill="#151518" stroke="white" strokeWidth="0.8" />
 
-              {/* Center text */}
               <text
                 x="308"
                 y="296"
@@ -211,7 +198,6 @@ const RadarSection: React.FC = () => {
                 MARKET FIT
               </text>
 
-              {/* Rotating tick marks around perimeter */}
               <g ref={tickRef} transform="translate(308 307)">
                 {Array.from({ length: 180 }).map((_, i) => {
                   const a = (i / 180) * Math.PI * 2;
@@ -236,25 +222,19 @@ const RadarSection: React.FC = () => {
                 })}
               </g>
 
-              {/* Counter-rotating elements */}
               <g ref={circleCounterRef}>
-                {/* Inner circle */}
                 <circle cx="308" cy="306" r="189" stroke="#4B4B54" strokeWidth="0.8" fill="none" />
                 
-                {/* Floating geometric elements */}
-                {/* Hexagon */}
                 <path 
                   d="M177.787 437.34L184.468 437.34L187.809 443.127L184.468 448.913L177.787 448.913L174.446 443.127L177.787 437.34Z" 
                   fill="white" 
                 />
                 
-                {/* Small squares */}
                 <rect x="496" y="222" width="4" height="4" fill="white" />
                 <rect x="467" y="222" width="4" height="4" fill="white" />
                 <rect x="496" y="250" width="4" height="4" fill="white" />
                 <rect x="467" y="250" width="4" height="4" fill="white" />
                 
-                {/* Angled squares */}
                 <rect 
                   x="190" y="158" 
                   width="3.2" height="3.2" 
@@ -280,7 +260,6 @@ const RadarSection: React.FC = () => {
                   transform="rotate(-16.3 159.6 177.6)" 
                 />
                 
-                {/* Central white hexagon */}
                 <path 
                   d="M180.166 164.799L182.114 171.913L176.928 177.157L169.793 175.287L167.845 168.174L173.031 162.93L180.166 164.799Z" 
                   fill="white" 
@@ -331,14 +310,14 @@ const CommercialSection: React.FC = () => {
   };
 
   return (
-  <section className="w-screen h-screen bg-zinc-950 overflow-x-hidden">
-  <div className="h-full w-full max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-12 max-w-full overflow-x-hidden">
-        <div className="lg:col-span-6 flex items-center">
+    <section className="w-full h-screen bg-zinc-950">
+      <div className="h-full w-full max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-12">
+        <div className="lg:col-span-6 flex items-start pt-32">
           <div className="px-8 md:px-16 lg:pl-24 lg:pr-8 max-w-4xl">
             <h3
               className="text-zinc-100 font-light tracking-tight"
               style={{
-                fontSize: 'clamp(2.0rem, 4.5vw, 4.0rem)',
+                fontSize: 'clamp(1.75rem, 3.5vw, 3.0rem)',
                 lineHeight: 1.1,
                 letterSpacing: '-0.02em',
               }}
@@ -348,10 +327,10 @@ const CommercialSection: React.FC = () => {
               drivers of success
             </h3>
             <p
-              className="mt-8 text-zinc-400 font-dm-mono"
+              className="mt-6 text-zinc-400"
               style={{
-                fontSize: 'clamp(0.95rem, 1.2vw, 1.25rem)',
-                lineHeight: 1.4,
+                fontSize: 'clamp(0.875rem, 1.1vw, 1.125rem)',
+                lineHeight: 1.5,
                 letterSpacing: '-0.005em',
                 maxWidth: '45ch',
               }}
@@ -362,8 +341,8 @@ const CommercialSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="lg:col-span-6 relative flex items-center justify-center">
-          <div className="w-[92%] max-w-[820px] aspect-square">
+        <div className="lg:col-span-6 relative flex items-center justify-center overflow-hidden">
+          <div className="w-[70%] max-w-[600px] aspect-square">
             <svg viewBox="0 0 617 615" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <mask id="mask0_5409_900" style={{maskType: 'alpha'}} maskUnits="userSpaceOnUse" x="5" y="5" width="606" height="605">
                 {Array.from({ length: 120 }).map((_, i) => {
@@ -480,7 +459,6 @@ const BrandSection: React.FC = () => {
         gsap.to(innerRef.current, { rotation: 360, repeat: -1, ease: 'none', duration: 65, transformOrigin: origin });
       }
 
-      // Safe orbits for triangles (staggered)
       orbitSafe(tri1Ref.current, orbitPathRef.current, 22, true, 0);
       orbitSafe(tri2Ref.current, orbitPathRef.current, 22, true, 11);
     });
@@ -488,15 +466,15 @@ const BrandSection: React.FC = () => {
   }, []);
 
   return (
-  <section className="w-screen h-screen bg-zinc-950 overflow-x-hidden">
-  <div className="h-full w-full max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-12 max-w-full overflow-x-hidden">
-        <div className="lg:col-span-6 flex items-center">
+    <section className="w-full h-screen bg-zinc-950">
+      <div className="h-full w-full max-w-8xl mx-auto grid grid-cols-1 lg:grid-cols-12">
+        <div className="lg:col-span-6 flex items-start pt-32">
           <div className="px-8 md:px-16 lg:pl-24 lg:pr-8 max-w-4xl">
             <h3
-              className="text-zinc-100 font-light tracking-tight font-dm-sans"
+              className="text-zinc-100 font-light tracking-tight"
               style={{
-                fontSize: 'clamp(2.0rem, 4.5vw, 4.5rem)',
-                lineHeight: 1.08,
+                fontSize: 'clamp(1.75rem, 3.5vw, 3.0rem)',
+                lineHeight: 1.1,
                 letterSpacing: '-0.02em',
               }}
             >
@@ -505,10 +483,10 @@ const BrandSection: React.FC = () => {
               is your brand
             </h3>
             <p
-              className="mt-8 text-zinc-400 font-dm-mono"
+              className="mt-6 text-zinc-400"
               style={{
-                fontSize: 'clamp(0.95rem, 1.2vw, 1.25rem)',
-                lineHeight: 1.4,
+                fontSize: 'clamp(0.875rem, 1.1vw, 1.125rem)',
+                lineHeight: 1.5,
                 letterSpacing: '-0.005em',
                 maxWidth: '45ch',
               }}
@@ -519,10 +497,9 @@ const BrandSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="lg:col-span-6 relative flex items-center justify-center">
-          <div className="w-[92%] max-w-[820px] aspect-square">
+        <div className="lg:col-span-6 relative flex items-center justify-center overflow-hidden">
+          <div className="w-[70%] max-w-[600px] aspect-square">
             <svg viewBox="0 0 1000 1000" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-              {/* Dial ticks */}
               <g ref={dialRef} transform="translate(500 500)">
                 {Array.from({ length: 180 }).map((_, i) => {
                   const a = (i / 180) * Math.PI * 2;
@@ -547,10 +524,8 @@ const BrandSection: React.FC = () => {
                 })}
               </g>
 
-              {/* Orbit path for triangles (hidden) */}
               <path ref={orbitPathRef} d="M 740 500 a 240 240 0 1 0 -480 0 a 240 240 0 1 0 480 0" fill="none" />
 
-              {/* Inner ring + center label */}
               <g ref={innerRef}>
                 <circle cx="500" cy="500" r="240" fill="none" stroke="#E4E4E7" strokeOpacity="0.22" strokeWidth="2" />
                 <text
@@ -573,7 +548,6 @@ const BrandSection: React.FC = () => {
                 </text>
               </g>
 
-              {/* Triangular markers */}
               <polygon ref={tri1Ref} points="0,-10 9,7 -9,7" fill="#FFFFFF" opacity="0.9" transform="translate(740 500)" />
               <polygon ref={tri2Ref} points="0,-10 9,7 -9,7" fill="#FFFFFF" opacity="0.9" transform="translate(260 500)" />
             </svg>

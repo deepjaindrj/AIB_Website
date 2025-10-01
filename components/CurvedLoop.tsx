@@ -29,10 +29,7 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
   const [offset, setOffset] = useState(0);
   const uid = useId();
   const pathId = `curve-${uid}`;
-  // To increase or decrease vertical space, adjust svgHeight, pathD Y values, and the pt-* class below
   const svgHeight = 180;
-  // Move the path even lower to create more space above the text (increase the Y value further)
-  // CHANGED: Increased Y from 165 to 195 for even more space above text
   const pathD = `M-100,195 Q500,${195 + curveAmount * 0.2} 1540,195`;
 
   const dragRef = useRef(false);
@@ -55,7 +52,6 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
   useEffect(() => {
     if (!spacing) return;
     if (textPathRef.current) {
-      // Center the text by calculating the center offset
       const svgWidth = 1440;
       const initial = (svgWidth - spacing) / 2;
       textPathRef.current.setAttribute('startOffset', initial + 'px');
@@ -114,52 +110,54 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
   const cursorStyle = interactive ? (dragRef.current ? 'grabbing' : 'grab') : 'auto';
 
   return (
-    <div
-      className="flex items-end justify-center w-full bg-white pt-52 pb-40 " // CHANGED: pt-56 for even more space above text
-      style={{ visibility: ready ? 'visible' : 'hidden', cursor: cursorStyle }}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={endDrag}
-      onPointerLeave={endDrag}
-    >
-      <svg
-        className="select-none w-full overflow-visible block aspect-[100/12] text-[20rem] font-bold uppercase leading-none" // Change text-[22rem] to adjust font size
-        viewBox={`0 0 1440 ${svgHeight}`}
+    <div className="w-full bg-white pt-52 pb-40 overflow-x-hidden">
+      <div
+        className="flex items-end justify-center w-full max-w-[1440px] mx-auto overflow-hidden"
+        style={{ visibility: ready ? 'visible' : 'hidden', cursor: cursorStyle }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerLeave={endDrag}
       >
-        <text
-          ref={measureRef}
-          xmlSpace="preserve"
-          style={{
-            visibility: 'hidden',
-            opacity: 0,
-            pointerEvents: 'none',
-            fontWeight: 300,
-          }}
+        <svg
+          className="select-none w-full block aspect-[100/12] text-[20rem] font-bold uppercase leading-none"
+          viewBox={`0 0 1440 ${svgHeight}`}
         >
-          {text}
-        </text>
-        <defs>
-          <path ref={pathRef} id={pathId} d={pathD} fill="none" stroke="transparent" />
-        </defs>
-        {ready && (
           <text
+            ref={measureRef}
             xmlSpace="preserve"
-            className={`fill-purple-600  ${className ?? ''}`}
-            textAnchor="middle"
-            dominantBaseline="middle"
+            style={{
+              visibility: 'hidden',
+              opacity: 0,
+              pointerEvents: 'none',
+              fontWeight: 300,
+            }}
           >
-            <textPath
-              ref={textPathRef}
-              href={`#${pathId}`}
-              startOffset={offset + 'px'}
-              xmlSpace="preserve"
-              alignmentBaseline="middle"
-            >
-              {totalText}
-            </textPath>
+            {text}
           </text>
-        )}
-      </svg>
+          <defs>
+            <path ref={pathRef} id={pathId} d={pathD} fill="none" stroke="transparent" />
+          </defs>
+          {ready && (
+            <text
+              xmlSpace="preserve"
+              className={`fill-purple-600 ${className ?? ''}`}
+              textAnchor="middle"
+              dominantBaseline="middle"
+            >
+              <textPath
+                ref={textPathRef}
+                href={`#${pathId}`}
+                startOffset={offset + 'px'}
+                xmlSpace="preserve"
+                alignmentBaseline="middle"
+              >
+                {totalText}
+              </textPath>
+            </text>
+          )}
+        </svg>
+      </div>
     </div>
   );
 };

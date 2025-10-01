@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import { motion, useInView } from 'framer-motion';
 
 type Member = {
   name: string;
@@ -26,6 +27,9 @@ const members: Member[] = [
 ];
 
 const HelloRoboTeam: React.FC = () => {
+  const heroRef = React.useRef(null);
+  const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
+
   return (
     <section className="w-screen min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center justify-center font-dm-mono overflow-hidden">
       <div className="w-full max-w-[2000px] mx-12 px-6 md:px-10 lg:px-14 pt-16 md:pt-20">
@@ -50,19 +54,44 @@ const HelloRoboTeam: React.FC = () => {
           </div>
 
           {/* First row, second & third columns merged - HELLO ROBO centered */}
-          <div className="col-span-2 row-span-1 bg-transparent flex flex-col items-center justify-center">
-            <h2
-              className="font-dm-sans text-zinc-100 font-semibold tracking-[0.2em] text-center"
-              style={{
-                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-                letterSpacing: '0.06em',
-              }}
-            >
-              HELLO ROBO
-            </h2>
-            <p className="mt-6 max-w-[450px] text-zinc-300/85 text-center text-sm leading-relaxed font-dm-mono">
-              Made of members with backgrounds at Nike, Apple and Google, the Hello Robo team mirrors real‑world expertise derived from design industry leaders.
-            </p>
+          <div ref={heroRef} className="col-span-2 row-span-1 bg-transparent flex flex-col items-center justify-center">
+            <div className="overflow-hidden">
+              <motion.div
+                initial={{ y: "100%" }}
+                animate={isHeroInView ? { y: "0%" } : { y: "100%" }}
+                transition={{ 
+                  duration: 0.6, 
+                  ease: "easeOut",
+                  delay: 0.2
+                }}
+              >
+                <h2
+                  className="font-dm-sans text-zinc-100  tracking-[0.2em] text-center"
+                  style={{
+                    fontSize: 'clamp(2.0rem, 4.5vw, 4.5rem)',
+                    letterSpacing: '0.01em',
+                  }}
+                >
+                  HELLO ROBO
+                </h2>
+              </motion.div>
+            </div>
+            
+            <div className="overflow-hidden">
+              <motion.div
+                initial={{ y: "100%" }}
+                animate={isHeroInView ? { y: "0%" } : { y: "100%" }}
+                transition={{ 
+                  duration: 0.6, 
+                  ease: "easeOut",
+                  delay: 0.3
+                }}
+              >
+                <p className=" max-w-[450px] text-zinc-300/85 text-center text-sm leading-relaxed font-dm-mono">
+                  Made of members with backgrounds at Nike, Apple and Google, the Hello Robo team mirrors real‑world expertise derived from design industry leaders.
+                </p>
+              </motion.div>
+            </div>
           </div>
 
           {/* First row, fourth column - Joe with border */}

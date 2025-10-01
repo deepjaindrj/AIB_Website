@@ -10,32 +10,27 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
 
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle email subscription logic here
     console.log('Subscribing email:', email);
     setEmail('');
   };
 
-  const navigationLinks = [
-    'AGENCY',
-    'APPROACH', 
-    'WORK',
-    'THOUGHTS',
-    'LAB'
-  ];
-
-  const socialLinks = [
-    'LINKEDIN',
-    'TWITTER',
-    'INSTAGRAM', 
-    'CONTACT'
-  ];
+  const navigationLinks = ['AGENCY', 'APPROACH', 'WORK', 'THOUGHTS', 'LAB'];
+  const socialLinks = ['LINKEDIN', 'TWITTER', 'INSTAGRAM', 'CONTACT'];
 
   return (
-    <footer className={`bg-white text-black py-16 px-2 pb-72 font-dm-mono overflow-hidden ${className}`}>
+    <footer className={`bg-white text-black py-20 px-2 font-dm-mono overflow-hidden ${className}`}>
+      
+      {/* ✅ Marquee at the top, part of the flow (not absolute) */}
+      <div className="w-full overflow-hidden whitespace-nowrap mb-4">
+        <div className="animate-marquee text-purple-600 text-[12rem] font-semibold tracking-tight font-dm-sans">
+          HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO
+        </div>
+      </div>
+
       <div className="max-w-8xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-3">
           
-          {/* Column 1: Copyright Section */}
+          {/* Column 1: Copyright */}
           <div className="flex flex-col justify-start">
             <p className="text-base text-gray-600 leading-relaxed uppercase font-dm-mono">
               Copyright ©<br />
@@ -43,7 +38,7 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
             </p>
           </div>
 
-          {/* Column 2: Navigation Links */}
+          {/* Column 2: Navigation */}
           <div className="flex flex-col space-y-3">
             {navigationLinks.map((link, index) => (
               <a
@@ -56,7 +51,7 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
             ))}
           </div>
 
-          {/* Column 3: Social Links */}
+          {/* Column 3: Social */}
           <div className="flex flex-col space-y-3">
             {socialLinks.map((link, index) => (
               <a
@@ -69,7 +64,7 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
             ))}
           </div>
 
-          {/* Column 4: Contact Section */}
+          {/* Column 4: Contact */}
           <div className="flex flex-col">
             <p className="text-base text-gray-600 mb-3 uppercase">Let's chat</p>
             <a 
@@ -80,7 +75,7 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
             </a>
           </div>
 
-          {/* Column 5: Email Subscription */}
+          {/* Column 5: Newsletter */}
           <div className="flex flex-col">
             <h3 className="text-base text-gray-600 mb-6 uppercase font-medium">Get valuable insights</h3>
             
@@ -121,6 +116,20 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
 
         </div>
       </div>
+
+      {/* Custom CSS for Marquee */}
+      <style jsx>{`
+        .animate-marquee {
+          display: inline-block;
+          min-width: 200%;
+          white-space: nowrap;
+          animation: marquee 120s linear infinite;
+        }
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </footer>
   );
 };
