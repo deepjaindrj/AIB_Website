@@ -32,7 +32,7 @@ const ContactFormSection: React.FC = () => {
   };
 
   const Label = ({ children, required = false }: { children: React.ReactNode; required?: boolean }) => (
-    <label className="block text-zinc-200/90 text-base md:text-lg tracking-wide mb-2">
+    <label className="block text-zinc-200/90 text-sm md:text-base lg:text-lg tracking-wide mb-1.5 md:mb-2">
       {children}
       {required ? <span className="text-zinc-200/60"> *</span> : null}
     </label>
@@ -54,7 +54,7 @@ const ContactFormSection: React.FC = () => {
       name={name}
       required={required}
       placeholder={placeholder}
-      className="w-full bg-transparent outline-none text-zinc-100 placeholder-zinc-500 border-b border-zinc-700/50 focus:border-zinc-400/70 transition-colors py-4 text-base md:text-lg"
+      className="w-full bg-transparent outline-none text-zinc-100 placeholder-zinc-500 border-b border-zinc-700/50 focus:border-zinc-400/70 transition-colors py-2.5 md:py-3 lg:py-4 text-sm md:text-base lg:text-lg"
     />
   );
 
@@ -65,7 +65,7 @@ const ContactFormSection: React.FC = () => {
         type="button"
         onClick={() => toggleTag(tag)}
         className={[
-          'px-4 md:px-6 py-6 rounded-sm text-xs md:text-sm font-semibold tracking-wide',
+          'px-3 py-3 md:px-4 md:py-4 lg:px-6 lg:py-6 rounded-sm text-[10px] md:text-xs lg:text-sm font-semibold tracking-wide',
           'border transition-colors duration-200',
           isActive
             ? 'border-zinc-300 text-zinc-100 bg-zinc-800/60'
@@ -79,26 +79,25 @@ const ContactFormSection: React.FC = () => {
 
   return (
     <section className="w-screen min-h-screen bg-zinc-950 text-zinc-100 overflow-hidden">
-      <div className="max-w-[1500px] mx-10 px-6 md:px-10 lg:px-18 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+      <div className="max-w-[1500px] mx-auto px-4 md:px-12 lg:px-18 py-12 md:py-16 lg:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-8 lg:gap-24 items-start">
           {/* Left headline */}
           <div className="lg:col-span-5">
             <h2
-              className=" font-dm-sans leading-[1.05] tracking-tight"
+              className="font-dm-sans leading-[1.05] tracking-tight"
               style={{
-                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                fontSize: 'clamp(2rem, 4vw, 4.5rem)',
                 letterSpacing: '-0.02em',
               }}
             >
-              Let’s simplify
-              <br />
+              Let's simplify 
               the complex
             </h2>
           </div>
 
           {/* Right form */}
           <div className="lg:col-span-7">
-            <form onSubmit={handleSubmit} className="space-y-10 text-lg font-dm-mono">
+            <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6 lg:space-y-8 text-base md:text-lg font-dm-mono">
               {/* Email */}
               <div>
                 <Label required>Email</Label>
@@ -113,15 +112,15 @@ const ContactFormSection: React.FC = () => {
 
               {/* How can we help? */}
               <div>
-                <div className="flex items-baseline justify-between mb-3">
+                <div className="flex items-baseline justify-between mb-2 md:mb-3">
                   <Label required>How can we help?</Label>
                 </div>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-2 md:gap-3 lg:gap-4">
                   {TAGS.slice(0, 3).map((t) => (
                     <TagButton tag={t} key={t} />
                   ))}
                 </div>
-                <div className="mt-4 flex flex-wrap gap-4">
+                <div className="mt-2 md:mt-3 lg:mt-4 flex flex-wrap gap-2 md:gap-3 lg:gap-4">
                   {TAGS.slice(3).map((t) => (
                     <TagButton tag={t} key={t} />
                   ))}
@@ -130,9 +129,9 @@ const ContactFormSection: React.FC = () => {
 
               {/* How did you know about us? (Optional) */}
               <div>
-                <div className="flex items-baseline justify-between mb-2">
+                <div className="flex items-baseline justify-between mb-1.5 md:mb-2">
                   <Label>How did you know about us?</Label>
-                  <span className="text-[11px] text-zinc-500 tracking-widest">
+                  <span className="text-[10px] md:text-[11px] text-zinc-500 tracking-widest">
                     OPTIONAL
                   </span>
                 </div>
@@ -140,10 +139,10 @@ const ContactFormSection: React.FC = () => {
               </div>
 
               {/* Submit button */}
-              <div className="pt-4">
+              <div className="pt-2 md:pt-3 lg:pt-4">
                 <button
                   type="submit"
-                  className="w-full py-5 md:py-6 rounded-sm bg-purple-600 hover:bg-purple-600 text-black font-semibold tracking-widest"
+                  className="w-full py-4 md:py-5 lg:py-6 rounded-sm bg-purple-600 hover:bg-purple-600 text-black font-semibold tracking-widest text-sm md:text-base"
                   style={{
                     letterSpacing: '0.12em',
                   }}

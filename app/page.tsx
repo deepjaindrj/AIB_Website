@@ -13,9 +13,7 @@ import Footer from '@/components/Footer';
 export default function LandingPage() {
   return (
     <div className="noise-bg">
-      <div
-        style={{ width: '100vw', margin: 'aut0 auto' }}
-      >
+      <div>
         <HeroSection />
         <HeroStatsSection />
         <TechSection />

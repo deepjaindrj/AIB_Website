@@ -57,7 +57,7 @@ const NewsRow: React.FC<NewsItem> = ({ tag, title, href = '#' }) => {
           <h3
             className="dm-sans leading-tight text-zinc-100 transition-colors duration-200 group-hover:text-zinc-50"
             style={{
-              fontSize: 'clamp(1.6rem, 2.6vw, 3rem)',
+              fontSize: 'clamp(1.4rem, 2vw, 2.5rem)',
               letterSpacing: '-0.01em',
             }}
           >
@@ -79,45 +79,49 @@ const NewsRow: React.FC<NewsItem> = ({ tag, title, href = '#' }) => {
 const NewsList: React.FC = () => {
   const triggerRef = useRef<HTMLDivElement | null>(null);
   const [shrink, setShrink] = useState(false);
+  const lastYRef = useRef(0); // Use ref instead of variable for persistence
 
   useEffect(() => {
-  if (!triggerRef.current) return;
+    if (!triggerRef.current) return;
 
-  let lastY = window.scrollY;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const currentY = window.scrollY;
+          const scrollingDown = currentY > lastYRef.current;
+          
+          // Update after comparison
+          lastYRef.current = currentY;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const currentY = window.scrollY;
-        const scrollingDown = currentY > lastY;
-        const scrollingUp = currentY < lastY;
-        lastY = currentY;
+          if (entry.isIntersecting && scrollingDown) {
+            setShrink(true); // shrink when scrolling down and element is visible
+          } else if (!entry.isIntersecting && !scrollingDown) {
+            setShrink(false); // expand when scrolling up and element is not visible
+          }
+        });
+      },
+      { 
+        threshold: 0.3, // Lowered threshold for better triggering
+        rootMargin: '0px' // Optional: adjust detection area
+      }
+    );
 
-        if (entry.isIntersecting && scrollingDown) {
-          setShrink(true); // shrink while going down
-        } else if (!entry.isIntersecting && scrollingUp) {
-          setShrink(false); // expand back only if scrolling up
-        }
-      });
-    },
-    { threshold: 0.6 }
-  );
+    observer.observe(triggerRef.current);
 
-  observer.observe(triggerRef.current);
-
-  return () => {
-    if (triggerRef.current) observer.unobserve(triggerRef.current);
-  };
-}, []);
-
+    return () => {
+      if (triggerRef.current) observer.unobserve(triggerRef.current);
+    };
+  }, []);
 
   return (
     <section className="relative w-screen bg-white text-zinc-100 overflow-hidden">
       {/* White panel that animates */}
       <motion.div
+        initial={{ scale: 1, y: 0 }} // Added initial prop
         animate={shrink ? { scale: 0.9, y: -50 } : { scale: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeInOut' }}
-        className="relative z-10 bg-zinc-950 rounded-b-2xl shadow-2xl"
+        transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }} // Custom easing for smoother animation
+        className="relative z-10 bg-zinc-950 shadow-2xl origin-top" // Changed rounded-b-2xl positioning and added origin-top
+        style={{ borderBottomLeftRadius: '1rem', borderBottomRightRadius: '1rem' }} // Inline styles for scale correction
       >
         <div className="max-w-[2000px] mx-8 py-32 md:py-42">
           {/* Title */}
@@ -125,7 +129,7 @@ const NewsList: React.FC = () => {
             <h2
               className="text-white font-light tracking-tight font-dm-sans"
               style={{
-                fontSize: 'clamp(2.8rem, 6.2vw, 5.2rem)',
+                fontSize: 'clamp(2rem, 4.8vw, 4rem)',
                 letterSpacing: '-0.02em',
               }}
             >
