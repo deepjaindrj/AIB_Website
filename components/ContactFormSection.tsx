@@ -78,8 +78,8 @@ const ContactFormSection: React.FC = () => {
   };
 
   return (
-    <section className="w-screen min-h-screen bg-zinc-950 text-zinc-100 overflow-hidden">
-      <div className="max-w-[1500px] mx-auto px-4 md:px-12 lg:px-18 py-12 md:py-16 lg:py-20">
+    <section className="w-screen min-h-screen bg-zinc-950 text-zinc-100 overflow-hidden py-32">
+      <div className="max-w-[1500px] mx-auto px-4 md:px-12 lg:px-18 ">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-8 lg:gap-24 items-start">
           {/* Left headline */}
           <div className="lg:col-span-5">
@@ -97,7 +97,7 @@ const ContactFormSection: React.FC = () => {
 
           {/* Right form */}
           <div className="lg:col-span-7">
-            <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6 lg:space-y-8 text-base md:text-lg font-dm-mono">
+            <form onSubmit={handleSubmit} className="space-y-2 lg:space-y-6 text-base font-dm-mono">
               {/* Email */}
               <div>
                 <Label required>Email</Label>

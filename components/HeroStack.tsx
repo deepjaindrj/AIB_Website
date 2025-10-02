@@ -1,9 +1,12 @@
 'use client';
-import React, { useLayoutEffect, useRef, useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 
-gsap.registerPlugin(MotionPathPlugin);
+// Register GSAP plugin only on client side
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(MotionPathPlugin);
+}
 
 /* Utility: safe MotionPath orbit with ref guards */
 function orbitSafe(
@@ -44,10 +47,19 @@ const RadarSection: React.FC = () => {
   const circleClockwiseRef = useRef<SVGGElement | null>(null);
   const circleCounterRef = useRef<SVGGElement | null>(null);
   const tickRef = useRef<SVGGElement | null>(null);
-  const [isClient, setIsClient] = React.useState(false);
-  React.useEffect(() => { setIsClient(true); }, []);
+  const [isClient, setIsClient] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
-  useLayoutEffect(() => {
+  // Client-side check
+  useEffect(() => {
+    setIsClient(true);
+    setIsMounted(true);
+  }, []);
+
+  // Animations - only run after component is mounted
+  useEffect(() => {
+    if (!isMounted) return;
+
     const ctx = gsap.context(() => {
       const origin = '50% 50%';
 
@@ -81,8 +93,13 @@ const RadarSection: React.FC = () => {
         });
       }
     });
+    
     return () => ctx.revert();
-  }, []);
+  }, [isMounted]);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <section className="w-full h-screen bg-zinc-950">
@@ -277,8 +294,15 @@ const RadarSection: React.FC = () => {
 const CommercialSection: React.FC = () => {
   const circleRef = useRef<SVGCircleElement | null>(null);
   const drawRefs = useRef<SVGPathElement[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
     const ctx = gsap.context(() => {
       if (circleRef.current) {
         gsap.to(circleRef.current, {
@@ -302,12 +326,17 @@ const CommercialSection: React.FC = () => {
         });
       });
     });
+    
     return () => ctx.revert();
-  }, []);
+  }, [isMounted]);
 
   const setPath = (el: SVGPathElement | null) => {
     if (el && !drawRefs.current.includes(el)) drawRefs.current.push(el);
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <section className="w-full h-screen bg-zinc-950">
@@ -447,8 +476,15 @@ const BrandSection: React.FC = () => {
   const tri1Ref = useRef<SVGPolygonElement | null>(null);
   const tri2Ref = useRef<SVGPolygonElement | null>(null);
   const orbitPathRef = useRef<SVGPathElement | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
     const ctx = gsap.context(() => {
       const origin = '50% 50%';
 
@@ -462,8 +498,13 @@ const BrandSection: React.FC = () => {
       orbitSafe(tri1Ref.current, orbitPathRef.current, 22, true, 0);
       orbitSafe(tri2Ref.current, orbitPathRef.current, 22, true, 11);
     });
+    
     return () => ctx.revert();
-  }, []);
+  }, [isMounted]);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <section className="w-full h-screen bg-zinc-950">
