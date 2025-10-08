@@ -19,17 +19,10 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
 
   return (
     <footer className={`bg-white text-black py-20 px-2 font-dm-mono overflow-hidden ${className}`}>
-      
-      {/* ✅ Marquee at the top, part of the flow (not absolute) */}
-      <div className="w-full overflow-hidden whitespace-nowrap mb-4">
-        <div className="animate-marquee text-purple-600 text-[12rem] font-semibold tracking-tight font-dm-sans">
-          HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO HELLO ROBO
-        </div>
-      </div>
 
       <div className="max-w-8xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-3">
-          
+
           {/* Column 1: Copyright */}
           <div className="flex flex-col justify-start">
             <p className="text-base text-gray-600 leading-relaxed uppercase font-dm-mono">
@@ -117,19 +110,7 @@ const Footer: React.FC<FooterProps> = ({ className = '' }) => {
         </div>
       </div>
 
-      {/* Custom CSS for Marquee */}
-      <style jsx>{`
-        .animate-marquee {
-          display: inline-block;
-          min-width: 200%;
-          white-space: nowrap;
-          animation: marquee 120s linear infinite;
-        }
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
+      
     </footer>
   );
 };

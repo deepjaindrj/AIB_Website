@@ -102,6 +102,32 @@ p, small, .mono-text {
   body {
     @apply bg-zinc-950 text-foreground;
     font-family: 'DM Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Performance improvements */
+  img, video {
+    will-change: auto;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Prevent image flickering */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  /* Smooth transitions for interactive elements */
+  a, button {
+    transition: all 0.2s ease;
+  }
+
+  /* Prevent layout shift */
+  * {
+    box-sizing: border-box;
   }
 }
 
@@ -124,6 +150,12 @@ p, small, .mono-text {
 }
 
 html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 

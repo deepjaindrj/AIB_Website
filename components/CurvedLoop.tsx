@@ -1,4 +1,10 @@
 import { useRef, useEffect, useState, useMemo, useId, FC, PointerEvent } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface CurvedLoopProps {
   marqueeText?: string;
@@ -25,6 +31,7 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
   const measureRef = useRef<SVGTextElement | null>(null);
   const textPathRef = useRef<SVGTextPathElement | null>(null);
   const pathRef = useRef<SVGPathElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [spacing, setSpacing] = useState(0);
   const [offset, setOffset] = useState(0);
   const uid = useId();
@@ -48,6 +55,30 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
   useEffect(() => {
     if (measureRef.current) setSpacing(measureRef.current.getComputedTextLength());
   }, [text, className]);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(containerRef.current,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 85%',
+            end: 'top 30%',
+            toggleActions: 'play none none reverse',
+          }
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   useEffect(() => {
     if (!spacing) return;
@@ -110,10 +141,13 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
   const cursorStyle = interactive ? (dragRef.current ? 'grabbing' : 'grab') : 'auto';
 
   return (
-    <div className="w-full bg-white pt-52 pb-40 overflow-x-hidden">
+    <div ref={containerRef} className="w-full bg-white pt-52 pb-40 overflow-x-hidden">
       <div
         className="flex items-end justify-center w-full max-w-[1440px] mx-auto overflow-hidden"
-        style={{ visibility: ready ? 'visible' : 'hidden', cursor: cursorStyle }}
+        style={{
+          visibility: ready ? 'visible' : 'hidden',
+          cursor: cursorStyle,
+        }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}

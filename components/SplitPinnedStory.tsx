@@ -1,29 +1,39 @@
 'use client';
-import React from 'react';
+
+import React, { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const ph = (w: number, h: number, q = 'nature') =>
   `https://source.unsplash.com/${w}x${h}/?${q}`;
 
 const SplitPinnedStory: React.FC = () => {
   return (
-    <section className="relative w-full bg-zinc-950 text-zinc-100 overflow-visible">
+    <section className="relative w-full bg-zinc-950 text-zinc-100 overflow-visible min-h-screen">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-14 py-20">
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-[130px]">
-          {/* Left: vertical stack of 3 image cards - this will scroll naturally */}
+          {/* Left: vertical stack of 3 image cards */}
           <div className="flex-1 lg:w-1/2">
-            <div className="space-y-8 min-h-[200vh]">
+            <div className="space-y-8 min-h-[80vh]"> {/* Reduced height for visibility, adjust as needed */}
               {/* Card 1 */}
-              <div className="bg-zinc-900/70 border border-zinc-800/60 p-6 flex flex-row items-end relative max-w-[600px]">
+              <div
+                className="bg-zinc-900/70 border border-zinc-800/60 p-6 flex flex-row items-end relative max-w-[600px]"
+                style={{ minHeight: '400px' }} // Force minimum height for visibility
+              >
                 <div className="absolute top-6 right-6 w-2 h-2 bg-purple-600 rounded-sm"></div>
                 <div className="flex-1 min-w-0 flex flex-col h-full justify-between">
                   <div>
-                    <div className="text-base font-medium tracking-widest text-zinc-300/80 mb-56">
+                    <div className="card-title text-base font-medium tracking-widest text-zinc-300/80 mb-56 font-dm-mono">
                       UNDERSTANDING CUSTOMERS
                       <br className="hidden md:block" />
                       AND YOUR MARKET
                     </div>
                   </div>
-                  <ul className="mt-28 text-lg font-medium text-zinc-300/90 leading-7">
+                  <ul className="card-list mt-28 text-lg font-medium text-zinc-300/90 leading-7 font-dm-sans">
                     <li>Customer interviews</li>
                     <li>Stakeholder interviews</li>
                     <li>Market research</li>
@@ -31,27 +41,31 @@ const SplitPinnedStory: React.FC = () => {
                     <li>Competitive research</li>
                   </ul>
                 </div>
-                <div className="flex-shrink-0 w-48 h-48 bg-zinc-800/70 rounded-sm overflow-hidden">
+                <div className="card-image flex-shrink-0 w-48 h-48 bg-zinc-800/70 rounded-sm overflow-hidden">
                   <img
                     src={ph(1200, 750, 'ui')}
-                    alt="placeholder 1"
+                    alt="Understanding customers"
                     className="w-full h-full object-cover opacity-95"
+                    loading="lazy"
                   />
                 </div>
               </div>
 
               {/* Card 2 */}
-              <div className="bg-zinc-900/70 border border-zinc-800/60 p-6 flex flex-row items-end gap-4 relative max-w-[600px]">
+              <div
+                className="bg-zinc-900/70 border border-zinc-800/60 p-6 flex flex-row items-end gap-4 relative max-w-[600px]"
+                style={{ minHeight: '400px' }}
+              >
                 <div className="absolute top-6 right-6 w-2 h-2 bg-purple-600 rounded-sm"></div>
                 <div className="flex-1 min-w-0 flex flex-col h-full justify-between">
                   <div>
-                    <div className="text-base font-medium tracking-widest text-zinc-300/80 mb-56">
+                    <div className="card-title text-base font-medium tracking-widest text-zinc-300/80 mb-56 font-dm-mono">
                       DESIGN FOR COMMERCIAL
                       <br className="hidden md:block" />
                       DRIVERS OF SUCCESS
                     </div>
                   </div>
-                  <ul className="mt-28 text-lg font-medium text-zinc-300/90 leading-7">
+                  <ul className="card-list mt-28 text-lg font-medium text-zinc-300/90 leading-7 font-dm-sans">
                     <li>UI/UX design</li>
                     <li>Data visualization</li>
                     <li>UI animation</li>
@@ -59,25 +73,29 @@ const SplitPinnedStory: React.FC = () => {
                     <li>Design systems</li>
                   </ul>
                 </div>
-                <div className="flex-shrink-0 w-48 h-48 bg-zinc-800/70 rounded-sm overflow-hidden">
+                <div className="card-image flex-shrink-0 w-48 h-48 bg-zinc-800/70 rounded-sm overflow-hidden">
                   <img
                     src={ph(1200, 750, 'app')}
-                    alt="placeholder 2"
+                    alt="Design for success"
                     className="w-full h-full object-cover opacity-95"
+                    loading="lazy"
                   />
                 </div>
               </div>
 
               {/* Card 3 */}
-              <div className="bg-zinc-900/70 border border-zinc-800/60 p-6 flex flex-row items-end gap-4 relative max-w-[600px]">
+              <div
+                className="bg-zinc-900/70 border border-zinc-800/60 p-6 flex flex-row items-end gap-4 relative max-w-[600px]"
+                style={{ minHeight: '400px' }}
+              >
                 <div className="absolute top-6 right-6 w-2 h-2 bg-purple-600 rounded-sm"></div>
                 <div className="flex-1 min-w-0 flex flex-col h-full justify-between">
                   <div>
-                    <div className="text-base font-medium tracking-widest text-zinc-300/80 mb-56">
+                    <div className="card-title text-base font-medium tracking-widest text-zinc-300/80 mb-56 font-dm-mono">
                       MARKET-READY PRODUCT DESIGN
                     </div>
                   </div>
-                  <ul className="mt-28 text-lg font-medium text-zinc-300/90 leading-7">
+                  <ul className="card-list mt-28 text-lg font-medium text-zinc-300/90 leading-7 font-dm-sans">
                     <li>UI/UX design</li>
                     <li>Data visualization</li>
                     <li>UI animation</li>
@@ -85,11 +103,12 @@ const SplitPinnedStory: React.FC = () => {
                     <li>Design systems</li>
                   </ul>
                 </div>
-                <div className="flex-shrink-0 w-48 h-48 bg-zinc-800/70 rounded-sm overflow-hidden">
+                <div className="card-image flex-shrink-0 w-48 h-48 bg-zinc-800/70 rounded-sm overflow-hidden">
                   <img
                     src={ph(1200, 750, 'prototype')}
-                    alt="placeholder 3"
+                    alt="Market-ready design"
                     className="w-full h-full object-cover opacity-95"
+                    loading="lazy"
                   />
                 </div>
               </div>

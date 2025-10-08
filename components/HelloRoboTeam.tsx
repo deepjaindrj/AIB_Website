@@ -1,6 +1,12 @@
 'use client';
-import React from 'react';
-import { motion, useInView } from 'framer-motion';
+
+import React, { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 type Member = {
   name: string;
@@ -27,44 +33,33 @@ const members: Member[] = [
 ];
 
 const HelloRoboTeam: React.FC = () => {
-  const heroRef = React.useRef(null);
-  const isHeroInView = useInView(heroRef, { once: true, margin: "-100px" });
-
   return (
     <section className="w-screen min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center justify-center font-dm-mono overflow-hidden">
       <div className="w-full max-w-[2000px] mx-12 px-6 md:px-10 lg:px-14 pt-16 md:pt-20">
         
         {/* Grid layout: 2 rows × 4 columns */}
         <div className="grid grid-cols-4 grid-rows-2 gap-0 w-full h-[800px] ">
-          
+         
           {/* First row, first column - Shakir with border */}
           <div className="col-span-1 row-span-1 border border-zinc-700/40 bg-transparent relative">
-            {/* Photo - top right */} 
+            {/* Photo - top right */}
             <div className="absolute top-6 right-6 p-4">
-              <div className="w-[120px] h-[120px] bg-zinc-800 overflow-hidden "> 
+              <div className="member-photo w-[120px] h-[120px] bg-zinc-800 overflow-hidden ">
                 <img src={members[0].img} alt={members[0].name} className="w-full h-full object-cover grayscale" />
               </div>
             </div>
-            
+
             {/* Text - bottom left */}
             <div className="absolute bottom-8 left-8">
-              <div className="text-xl font-normal tracking-wide mb-2 text-white font-dm-sans">{members[0].name}</div>
-              <div className="text-sm text-zinc-300/90 font-normal font-dm-mono">{members[0].role}</div>
+              <div className="member-name text-xl font-normal tracking-wide mb-2 text-white font-dm-sans">{members[0].name}</div>
+              <div className="member-role text-sm text-zinc-300/90 font-normal font-dm-mono">{members[0].role}</div>
             </div>
           </div>
 
           {/* First row, second & third columns merged - HELLO ROBO centered */}
-          <div ref={heroRef} className="col-span-2 row-span-1 bg-transparent flex flex-col items-center justify-center">
-            <div className="overflow-hidden">
-              <motion.div
-                initial={{ y: "100%" }}
-                animate={isHeroInView ? { y: "0%" } : { y: "100%" }}
-                transition={{ 
-                  duration: 0.6, 
-                  ease: "easeOut",
-                  delay: 0.2
-                }}
-              >
+          <div className="col-span-2 row-span-1 bg-transparent flex flex-col items-center justify-center">
+            <div>
+              <div>
                 <h2
                   className="font-dm-sans text-zinc-100  tracking-[0.2em] text-center"
                   style={{
@@ -74,23 +69,15 @@ const HelloRoboTeam: React.FC = () => {
                 >
                   HELLO ROBO
                 </h2>
-              </motion.div>
+              </div>
             </div>
-            
-            <div className="overflow-hidden">
-              <motion.div
-                initial={{ y: "100%" }}
-                animate={isHeroInView ? { y: "0%" } : { y: "100%" }}
-                transition={{ 
-                  duration: 0.6, 
-                  ease: "easeOut",
-                  delay: 0.3
-                }}
-              >
-                <p className=" max-w-[450px] text-zinc-300/85 text-center text-sm leading-relaxed font-dm-mono">
+
+            <div>
+              <div>
+                <p className="max-w-[450px] text-zinc-300/85 text-center text-sm leading-relaxed font-dm-mono">
                   Made of members with backgrounds at Nike, Apple and Google, the Hello Robo team mirrors real‑world expertise derived from design industry leaders.
                 </p>
-              </motion.div>
+              </div>
             </div>
           </div>
 
@@ -98,15 +85,15 @@ const HelloRoboTeam: React.FC = () => {
           <div className="col-span-1 row-span-1 border border-zinc-700/40 bg-transparent relative">
             {/* Photo - top right */}
             <div className="absolute top-6 right-6 p-4">
-              <div className="w-[120px] h-[120px] bg-zinc-800 overflow-hidden">
+              <div className="member-photo w-[120px] h-[120px] bg-zinc-800 overflow-hidden">
                 <img src={members[1].img} alt={members[1].name} className="w-full h-full object-cover grayscale" />
               </div>
             </div>
-            
+
             {/* Text - bottom left */}
             <div className="absolute bottom-8 left-8">
-              <div className="text-xl font-normal tracking-wide mb-2 text-white font-dm-sans">{members[1].name}</div>
-              <div className="text-sm text-zinc-300/90 font-normal font-dm-mono">{members[1].role}</div>
+              <div className="member-name text-xl font-normal tracking-wide mb-2 text-white font-dm-sans">{members[1].name}</div>
+              <div className="member-role text-sm text-zinc-300/90 font-normal font-dm-mono">{members[1].role}</div>
             </div>
           </div>
 
@@ -117,15 +104,15 @@ const HelloRoboTeam: React.FC = () => {
           <div className="col-span-1 row-span-1 border border-zinc-700/40 bg-transparent relative">
             {/* Photo - top right */}
             <div className="absolute top-6 right-6 p-4">
-              <div className="w-[120px] h-[120px] bg-zinc-800 overflow-hidden">
+              <div className="member-photo w-[120px] h-[120px] bg-zinc-800 overflow-hidden">
                 <img src={members[2].img} alt={members[2].name} className="w-full h-full object-cover grayscale" />
               </div>
             </div>
-            
+
             {/* Text - bottom left */}
             <div className="absolute bottom-8 left-8 ">
-              <div className="text-xl font-normal tracking-wide mb-2 text-white font-dm-sans">{members[2].name}</div>
-              <div className="text-sm text-zinc-300/90 font-normal font-dm-mono">{members[2].role}</div>
+              <div className="member-name text-xl font-normal tracking-wide mb-2 text-white font-dm-sans">{members[2].name}</div>
+              <div className="member-role text-sm text-zinc-300/90 font-normal font-dm-mono">{members[2].role}</div>
             </div>
           </div>
 

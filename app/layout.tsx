@@ -22,11 +22,11 @@ export default function RootLayout({
       <body className={`${inter.className} bg-gray-950 text-white antialiased`}>
         {/* Background gradient */}
         <div className="fixed inset-0 bg-gradient-to-br from-gray-950 via-purple-950/20 to-blue-950/20 -z-10" />
-        
+
         <NavigationProvider>
           {/* Fixed Navbar - doesn't take space from content flow */}
           <Navbar />
-          
+
           {/* Page content with transitions */}
           <PageTransition>{children}</PageTransition>
         </NavigationProvider>
