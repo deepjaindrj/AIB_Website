@@ -1,7 +1,5 @@
 'use client';
-
-import React, { useRef, useEffect, useState } from 'react';
-import { gsap } from 'gsap';
+import React, { useEffect, useRef, useState } from 'react';
 
 const techTags = [
   'AI',
@@ -14,8 +12,28 @@ const techTags = [
 ];
 
 const TagItem: React.FC<{ tag: string; index: number }> = ({ tag, index }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const itemRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (itemRef.current) {
+      observer.observe(itemRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="relative mb-6 w-full h-20 group">
+    <div ref={itemRef} className="relative mb-6 w-full h-20 group">
       <svg 
         width="100%" 
         height="100%" 
@@ -29,15 +47,26 @@ const TagItem: React.FC<{ tag: string; index: number }> = ({ tag, index }) => {
           </clipPath>
         </defs>
         <g clipPath={`url(#clip-${index})`}>
-          <path
-            d="M0.400393 19.8237L18.4814 0.399903L491.063 0.399914L509.6 19.8257L509.6 89.1734L491.063 108.599L18.4814 108.599L0.400391 89.1753L0.400393 19.8237Z"
-            stroke="currentColor"
+          <path 
+            d="M0.400393 19.8237L18.4814 0.399903L491.063 0.399914L509.6 19.8257L509.6 89.1734L491.063 108.599L18.4814 108.599L0.400391 89.1753L0.400393 19.8237Z" 
+            stroke="currentColor" 
             strokeWidth="0.8"
+            strokeDasharray="1600"
+            strokeDashoffset={isVisible ? 0 : 1600}
+            style={{
+              transition: 'stroke-dashoffset 1.2s ease-out',
+              transitionDelay: `${index * 0.1}s`
+            }}
           />
         </g>
       </svg>
-      <div
+      <div 
         className="absolute inset-0 flex items-center justify-center"
+        style={{
+          opacity: isVisible ? 1 : 0,
+          transition: 'opacity 0.6s ease-out',
+          transitionDelay: `${index * 0.1 + 0.6}s`
+        }}
       >
         <span className="text-zinc-200 text-base font-medium tracking-wide font-dm-mono">
           {tag}
@@ -48,9 +77,36 @@ const TagItem: React.FC<{ tag: string; index: number }> = ({ tag, index }) => {
 };
 
 const TechSection = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="min-h-screen bg-zinc-950 flex items-center justify-center overflow-hidden">
-      <div className="w-[90vw] mx-auto px-16 h-[80vh] border border-zinc-800">
+    <section ref={sectionRef} className="min-h-screen bg-zinc-950 flex items-center justify-center overflow-hidden">
+      <div 
+        className="w-[90vw] mx-auto px-16 h-[80vh] border border-zinc-800"
+        style={{
+          transform: isVisible ? 'translateY(0)' : 'translateY(100px)',
+          opacity: isVisible ? 1 : 0,
+          transition: 'transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.2s ease-out'
+        }}
+      >
         <div className="grid grid-cols-2 gap-8 h-full">
           {/* Left side - Text content */}
           <div className="flex flex-col justify-center items-start">
@@ -58,7 +114,7 @@ const TechSection = () => {
               <h1 className="text-6xl font-light text-zinc-100 tracking-tight leading-none font-dm-sans" >
                 Hard tech
               </h1>
-
+              
               <div className="max-w-lg">
                 <p className="text-md  text-zinc-400 leading-[1.5] font-dm-mono">
                   From robotics and AI to automation, aerospace, and advanced systems. Our work translates deep tech into clear, usable, and market-ready interfaces.
